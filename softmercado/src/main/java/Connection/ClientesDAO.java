@@ -79,11 +79,47 @@ public class ClientesDAO {
             System.out.println("Dados inseridos com sucesso");
 
         } catch (SQLException e) {
-          throw new RuntimeException("Erro ao inserir dados no banco de dados.", e);
+            throw new RuntimeException("Erro ao inserir dados no banco de dados.", e);
 
         } finally {
             ConnectionFactory.closeConnection(connection, stmt);
         }
 
+    }
+
+    // Atualizar dados no banco
+    public void atualizar(String nome, String cpf) {
+        PreparedStatement stmt = null;
+        // Define a instrução SQL parametrizada para atualizar dados pela placa
+
+        String sql = "UPDATE clientes_sysmercad SET nome = ? WHERE cpf = ?";
+
+        try {
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, nome);
+            stmt.setString(2, cpf);
+            stmt.executeUpdate();
+            System.out.println("Dados atualizados com sucesso");
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar dados no banco de dados.", e);
+        } finally {
+            ConnectionFactory.closeConnection(connection, stmt);
+        }
+    }
+
+    public void apagar(String cpf) {
+        PreparedStatement stmt = null;
+        // Define a instrução SQL parametrizada para apagar dados pela placa
+        String sql = "DELETE FROM clientes_sysmercad WHERE cpf = ?";
+
+        try {
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, cpf);
+            stmt.executeUpdate(); // Executa a instrução
+            System.out.println("Dado apagado com sucesso");
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao apagar dados no banco de dados.", e);
+        }
+        ConnectionFactory.closeConnection(connection, stmt);
     }
 }

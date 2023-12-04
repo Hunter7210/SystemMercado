@@ -1,5 +1,15 @@
 package View;
 
-public class JanelaPrincipal {
+import javax.swing.JFrame;
+
+public class JanelaPrincipal  extends JFrame{
+ 
+
+
     
+
+    public void run() {
+        this.setVisible(true);
+    }
+
 }

@@ -17,8 +17,8 @@ public class PainelGerencEstoq {
     private JLabel tit;
     private JComboBox<String> codProd, codLote, codVenci;
     private JButton btnFiltrar;
-    private List<Clientes> clientes;
     private List<Produtos> produtos;
+    private List<Clientes> clientes;
     private List<Vendas> vendas;
     
     private JTable tabelaGerencEstoq;

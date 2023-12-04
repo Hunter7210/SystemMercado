@@ -43,8 +43,8 @@ public class ClientesDAO {
         clientes = new ArrayList<>();
         // Cria uma lista para armazenar os carros recuperados do banco de dados
         try {
-            String query = "SELECT * FROM carros_lojacarros";
-            stmt = connection.prepareStatement(query);
+            String sql = "SELECT * FROM clientes_sysmercad";
+            stmt = connection.prepareStatement(sql);
             // Prepara a consulta SQL para selecionar todos os registros da tabela
             rs = stmt.executeQuery();
             // Executa a consulta e armazena os resultados no ResultSet
@@ -61,5 +61,29 @@ public class ClientesDAO {
             // Fecha a conexão, o PreparedStatement e o ResultSet
         }
         return clientes; // Retorna a lista de carros recuperados do banco de dados
+    }
+
+    // Cadastrar Carro no banco
+    public void cadastrar(String nome, String cpf) {
+
+        PreparedStatement stmt = null;
+        // Define a instrução SQL parametrizada para cadastrar na tabela
+
+        String sql = "INSERT INTO clientes_sysmercad VALUES (?,?)";
+
+        try {
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, nome);
+            stmt.setString(2, cpf);
+            stmt.executeUpdate();
+            System.out.println("Dados inseridos com sucesso");
+
+        } catch (SQLException e) {
+          throw new RuntimeException("Erro ao inserir dados no banco de dados.", e);
+
+        } finally {
+            ConnectionFactory.closeConnection(connection, stmt);
+        }
+
     }
 }

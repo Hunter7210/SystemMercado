@@ -6,6 +6,7 @@ public class Clientes {
     //Atributos
     private String nome;
     private String cpf;
+    private String senha;
 
     //Construtor
     public Clientes(String nome, String cpf) {

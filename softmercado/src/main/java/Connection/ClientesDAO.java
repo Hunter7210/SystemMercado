@@ -122,4 +122,31 @@ public class ClientesDAO {
         }
         ConnectionFactory.closeConnection(connection, stmt);
     }
+
+    public void verificar(String nome, String cpf) {
+        PreparedStatement stmt = null;
+
+        String sql = "SELECT * FROM clientes_sysmercad WHERE nome= ? AND cpf = ?";
+
+        try {
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, nome);
+            stmt.setString(2, cpf);
+            int result = stmt.executeUpdate(); // Executa a instrução
+
+            System.out.println("Dado Verificado com sucesso");
+            if (result != 0) {
+                System.out.println("Usuario encontrado!");
+
+            } else {
+                System.out.println("Usuario não encontrado!");
+            }
+
+        } catch (SQLException ex) {
+            throw new RuntimeException("Erro ao .", ex);
+        }
+        ConnectionFactory.closeConnection(connection, stmt);
+    }
+
+    
 }

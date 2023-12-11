@@ -11,10 +11,10 @@ import java.awt.GridLayout;
 
 public class PainelCadFunc extends JPanel {
 
-    private JLabel tit, usuario, senha;
-    private JTextField inptUsua, inptSen;
+    private JLabel tit, senha;
+    private JTextField inptSen;
     private JButton enviar;
-    private JPanel paiPrinc, paicont, paiNome, paiCPF;
+    private JPanel paiPrinc, paicont, paiCPF;
 
     public PainelCadFunc() {
         // Atributos
@@ -25,30 +25,23 @@ public class PainelCadFunc extends JPanel {
         paiPrinc = new JPanel();
         this.add(paiPrinc);
 
-        tit = new JLabel("Qual seu cargo");
+        tit = new JLabel("CADASTRO");
 
         paicont = new JPanel();
         paicont.setLayout(grid3x1);
         paiPrinc.add(paicont);
 
-        paiNome = new JPanel();
-        paiNome.setLayout(grid2x1);
-        usuario = new JLabel("Digite seu usuario:");
-        paiNome.add(usuario);
-        inptUsua = new JTextField("Usuario");
-        paiNome.add(inptUsua);
-
+    
         paiCPF = new JPanel();
         paiCPF.setLayout(grid2x1);
-        senha = new JLabel("Digite sua senha:");
+        senha = new JLabel("Digite o CPF:");
         paiCPF.add(senha);
-        inptSen = new JTextField("Senha");
+        inptSen = new JTextField("CPF");
         paiCPF.add(inptSen);
 
-        enviar = new JButton("Entrar");
+        enviar = new JButton("Cadastrar");
 
         paicont.add(tit);
-        paicont.add(paiNome);
         paicont.add(paiCPF);
         paicont.add(enviar);
 

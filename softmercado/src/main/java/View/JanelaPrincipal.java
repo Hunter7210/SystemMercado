@@ -11,9 +11,11 @@ public class JanelaPrincipal extends JFrame {
         JTabbedPane abas = new JTabbedPane();
 
         this.add(abas);
+        PainelInical inicio = new PainelInical();
+        abas.add(inicio, "Tela Inicial");
 
-        PainelCadGeral CadastroGeral = new PainelCadGeral();
-        abas.add(CadastroGeral, "Cadastro Geral");
+        PainelCadGeral cadastroGeral = new PainelCadGeral();
+        abas.add(cadastroGeral, "Cadastro Geral");
         
         PainelCadFunc cadasClien = new PainelCadFunc();
         abas.add(cadasClien, "Cadastrar Cliente");
@@ -33,8 +35,11 @@ public class JanelaPrincipal extends JFrame {
         PainelGerencEstoq estoque = new PainelGerencEstoq();
         abas.add(estoque, "Estoque");
         
-        PainelVendas vendas = new PainelVendas();
-        abas.add(vendas, "Vendas");
+        PainelFuncInseProd comprasClien = new PainelFuncInseProd();
+        abas.add(comprasClien, "Compra");
+        
+        PainelVendas vendasRegistro = new PainelVendas();
+        abas.add(vendasRegistro, "Vendas Registro");
 
         setBounds(200, 100, 800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

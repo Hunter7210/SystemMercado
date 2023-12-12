@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import Connection.ClientesDAO;
 import Connection.ProdutoDAO;
 import Connection.VendasDAO;
+import Controller.ControlCards;
 import Controller.VendasControl;
 import Model.Clientes;
 import Model.Produtos;
@@ -86,6 +87,16 @@ public class PainelVendas extends JPanel {
 
         // Criar tabela vendas
         new VendasDAO().criarTabela();
+
+
+
+
+        
+        VendasControl vendasCont = new VendasControl(vendas, modeloTableRegis, tabelarRegisVend);
+        vendasCont.limparCombo(limpar ,codProd, codPeri);
+
+        vendasCont.atualizarTabela(modeloTableRegis, vendas);
+ 
     }
 
     /*     // Atualizar os dados da tabela
@@ -96,21 +107,5 @@ public class PainelVendas extends JPanel {
         // Buscando o item selecionado no comboBox
  */
 
-    private void limparCombo(Object combo1, Object combo2) {
-        codProd.setSelectedIndex(0);
-        codPeri.setSelectedIndex(0);
-    }
-/* 
-    // Método para atualizar a tabela de exibição com dados do banco de dados
-    private void atualizarTabela() {
-        modeloTableRegis.setRowCount(0); // Limpa todas as linhas existentes na tabela
-        vendas = new VendasDAO().listarVendas();
-        // Obtém as vendas atualizados do banco de dados
-        for (Vendas venda : vendas) {
-            // Adiciona os dados de cada venda como uma nova linha na tabela Swing
-            modeloTableRegis.addRow(new Object[] { venda.getDataVenda(), venda.getCliente(), venda.getCarroVendi(),
-                    venda.getValorCompra() });
-        }
-    }
- */
+
 }

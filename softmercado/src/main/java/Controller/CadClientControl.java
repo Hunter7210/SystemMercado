@@ -38,9 +38,7 @@ public class CadClientControl {
     }
 
     public void cadastrar(String cpf, String nome) {
-        
         new ClientesDAO().cadastrar(nome, cpf);
-
         atualizarTableClie();
     }
 

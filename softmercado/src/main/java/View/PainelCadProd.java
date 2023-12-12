@@ -93,5 +93,8 @@ public class PainelCadProd extends JPanel {
 
 
         new ProdutoDAO().criarTabela();
+
+
+        
     }
 }

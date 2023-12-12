@@ -13,6 +13,7 @@ import Model.Clientes;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PainelCadClient extends JPanel {
@@ -46,7 +47,6 @@ public class PainelCadClient extends JPanel {
         cpf = new JLabel("Digite o CPF:");
         paiCPF.add(cpf);
         inptCPF = new JTextField();
-        inptCPF.setBackground(Color.BLUE);
         paiCPF.add(inptCPF);
 
         enviar = new JButton("Cadastrar");
@@ -55,11 +55,15 @@ public class PainelCadClient extends JPanel {
         paicont.add(paiCPF);
         paicont.add(enviar);
 
+        List<Clientes> clientes = new ArrayList<>();
+        DefaultTableModel modeloTableClien = new DefaultTableModel();
+        JTable tabelaClien = new JTable(modeloTableClien);
+
         new ClientesDAO().criarTabela();
 
         CadClientControl cadastroClient = new CadClientControl(clientes, modeloTableClien, tabelaClien);
         // Chamando a ação la da pagina cadGeralControl
-        cadastroClient.cadastrar(enviar, inptCPF.getText(), inptCPF);
+        cadastroClient.cadastrar(enviar, inptCPF);
 
     }
 }

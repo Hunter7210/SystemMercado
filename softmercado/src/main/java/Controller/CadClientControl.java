@@ -12,7 +12,6 @@ import javax.swing.table.DefaultTableModel;
 import Connection.ClientesDAO;
 import Model.Clientes;
 
-
 public class CadClientControl {
 
     private List<Clientes> clientes;
@@ -38,19 +37,17 @@ public class CadClientControl {
         }
     }
 
-    public void cadastrar(JButton btnAciona, String cpf, JTextField inptTexto)  {
+    public void cadastrar(JButton btnAciona, JTextField inptTexto) {
 
         btnAciona.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ClientesDAO().cadastrar(cpf);
+                new ClientesDAO().cadastrar(inptTexto.getText());
+
                 atualizarTableClie();
-                /* inptTexto.setText(""); */
-
+                inptTexto.setText("");
             }
-
         });
-
     }
 
     /*

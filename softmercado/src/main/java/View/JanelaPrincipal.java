@@ -41,7 +41,7 @@ public class JanelaPrincipal extends JFrame {
         PainelCadGeral cadastroGeral = new PainelCadGeral();
         paineDisplay.add(cadastroGeral, "Cadastro Geral");
 
-        PainelCadFunc cadasClien = new PainelCadFunc();
+        PainelCadClient cadasClien = new PainelCadClient();
         paineDisplay.add(cadasClien, "Cadastrar Cliente");
 
         PainelCadProd cadasProd = new PainelCadProd();

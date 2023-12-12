@@ -50,5 +50,7 @@ public class PainelCadGeral extends JPanel {
         painelContem.add(painelSenha);
         painelContem.add(btnEnvi);
 
+        
+
     }
 }

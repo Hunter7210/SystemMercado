@@ -1,5 +1,6 @@
 package Connection;
 
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +21,15 @@ public class ProdutoDAO {
     }
 
     public void criarTabela() {
-        String sql = "CREATE TABLE IF NOT EXISTS produt_sysmercad (id INT AUTO_INCREMENT PRIMARY KEY, codigoprod VARCHAR(10), nome VARCHAR(20), datavenc VARCHAR(10), lote VARCHAR(10), dataentr VARCHAR(10), quantprod int)";
+        String sql = "CREATE TABLE IF NOT EXISTS produt_sysmercad (" +
+                "    id SERIAL PRIMARY KEY," +
+                "    codigoprod VARCHAR(10)," +
+                "    nome VARCHAR(20)," +
+                "    datavenc VARCHAR(10)," +
+                "    lote VARCHAR(10)," +
+                "    dataentr VARCHAR(10)," +
+                "    quantprod INT" +
+                ");";
 
         try (Statement stmt = this.connection.createStatement()) {
             stmt.execute(sql);
@@ -69,6 +78,47 @@ public class ProdutoDAO {
         return produtos; // Retorna a lista de carros recuperados do banco de dados
 
     }
+
+    public List<Produtos> listar_apenas_um() {
+         PreparedStatement stmt = null;
+
+
+        // Declaração do objeto PreparedStatement para executar a consulta
+        ResultSet rs = null;
+        // Declaração do objeto ResultSet para armazenar os resultados da consulta
+
+        produtos = new ArrayList<>();
+        // Cria uma lista para armazenar os carros recuperados do banco de dados
+        try {
+            String sql = "SELECT * FROM produt_sysmercad Where id=?";
+            stmt = connection.prepareStatement(sql);
+            // Prepara a consulta SQL para selecionar todos os registros da tabela
+            stmt.setString(1, "id");
+            rs = stmt.executeQuery();
+
+            // Executa a consulta e armazena os resultados no ResultSet
+            while (rs.next()) {
+                // Para cada registro no ResultSet, cria um objeto Carros com os valores do
+                // registro
+                Produtos produto = new Produtos(
+                        rs.getString("codigoprod"),
+                        rs.getString("nome"),
+                        rs.getString("datavenc"),
+                        rs.getString("lote"),
+                        rs.getString("dataentr"),
+                        rs.getString("quantprod"));
+                produtos.add(produto);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex); // Em caso de erro durante a consulta, imprime o erro
+        } finally {
+            ConnectionFactory.closeConnection(connection, stmt, rs);
+            // Fecha a conexão, o PreparedStatement e o ResultSet
+        }
+        return produtos; // Retorna a lista de carros recuperados do banco de dados
+
+    }
+    
 
     public void atualizar(String id, String codigoBarra, String nome, String dataVenc, String lote, String dataEntr,
             String quantLot) {

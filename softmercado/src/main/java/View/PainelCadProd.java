@@ -7,6 +7,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Connection.ProdutoDAO;
+
 public class PainelCadProd extends JPanel {
 
     private JLabel tit, nomeProd, codProd, precUitProd, loteProd, datEntreg, datVenc;
@@ -90,5 +92,6 @@ public class PainelCadProd extends JPanel {
         painelContEle.add(btnEnvi);
 
 
+        new ProdutoDAO().criarTabela();
     }
 }

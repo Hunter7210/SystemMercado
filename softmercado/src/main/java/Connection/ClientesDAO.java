@@ -22,7 +22,7 @@ public class ClientesDAO {
 
     // Criação da tabela
     public void criarTabela() {
-        String sql = "CREATE TABLE IF NOT EXISTS clientes_sysmercad (nome VARCHAR(30), cpf VARCHAR(14) PRIMARY KEY)";
+        String sql = "CREATE TABLE IF NOT EXISTS clientes_sysmercad (cpf VARCHAR(14) PRIMARY KEY)";
 
         try (Statement stmt = this.connection.createStatement()) {
             stmt.execute(sql);
@@ -51,7 +51,7 @@ public class ClientesDAO {
             while (rs.next()) {
                 // Para cada registro no ResultSet, cria um objeto Carros com os valores do
                 // registro
-                Clientes cliente = new Clientes(rs.getString("nome"), rs.getString("cpf"));
+                Clientes cliente = new Clientes(rs.getString("cpf"));
                 clientes.add(cliente);
             }
         } catch (SQLException ex) {
@@ -64,20 +64,18 @@ public class ClientesDAO {
     }
 
     // Cadastrar Carro no banco
-    public void cadastrar(String nome, String cpf) {
+    public void cadastrar(String cpf) {
 
         PreparedStatement stmt = null;
         // Define a instrução SQL parametrizada para cadastrar na tabela
 
-        String sql = "INSERT INTO clientes_sysmercad VALUES (?,?)";
+        String sql = "INSERT INTO clientes_sysmercad (cpf) VALUES (?)";
 
         try {
             stmt = connection.prepareStatement(sql);
-            stmt.setString(1, nome);
-            stmt.setString(2, cpf);
+            stmt.setString(1, cpf);
             stmt.executeUpdate();
             System.out.println("Dados inseridos com sucesso");
-
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao inserir dados no banco de dados.", e);
 
@@ -86,26 +84,27 @@ public class ClientesDAO {
         }
 
     }
-
-    // Atualizar dados no banco
-    public void atualizar(String nome, String cpf) {
-        PreparedStatement stmt = null;
-        // Define a instrução SQL parametrizada para atualizar dados pela placa
-
-        String sql = "UPDATE clientes_sysmercad SET nome = ? WHERE cpf = ?";
-
-        try {
-            stmt = connection.prepareStatement(sql);
-            stmt.setString(1, nome);
-            stmt.setString(2, cpf);
-            stmt.executeUpdate();
-            System.out.println("Dados atualizados com sucesso");
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao atualizar dados no banco de dados.", e);
-        } finally {
-            ConnectionFactory.closeConnection(connection, stmt);
-        }
-    }
+    /*
+     * // Atualizar dados no banco
+     * public void atualizar(String cpf) {
+     * PreparedStatement stmt = null;
+     * // Define a instrução SQL parametrizada para atualizar dados pela placa
+     * 
+     * String sql = "UPDATE clientes_sysmercad SET nome = ? WHERE cpf = ?";
+     * 
+     * try {
+     * stmt = connection.prepareStatement(sql);
+     * stmt.setString(1, nome);
+     * stmt.setString(2, cpf);
+     * stmt.executeUpdate();
+     * System.out.println("Dados atualizados com sucesso");
+     * } catch (Exception e) {
+     * throw new RuntimeException("Erro ao atualizar dados no banco de dados.", e);
+     * } finally {
+     * ConnectionFactory.closeConnection(connection, stmt);
+     * }
+     * }
+     */
 
     public void apagar(String cpf) {
         PreparedStatement stmt = null;
@@ -123,21 +122,20 @@ public class ClientesDAO {
         ConnectionFactory.closeConnection(connection, stmt);
     }
 
-    public void verificar(String nome, String cpf) {
+    public void verificar(String cpf) {
         PreparedStatement stmt = null;
 
-        String sql = "SELECT * FROM clientes_sysmercad WHERE nome= ? AND cpf = ?";
+        String sql = "SELECT * FROM clientes_sysmercad WHERE cpf = ?";
 
         try {
             stmt = connection.prepareStatement(sql);
-            stmt.setString(1, nome);
-            stmt.setString(2, cpf);
+
+            stmt.setString(1, cpf);
             int result = stmt.executeUpdate(); // Executa a instrução
 
             System.out.println("Dado Verificado com sucesso");
             if (result != 0) {
                 System.out.println("Usuario encontrado!");
-
             } else {
                 System.out.println("Usuario não encontrado!");
             }
@@ -148,5 +146,4 @@ public class ClientesDAO {
         ConnectionFactory.closeConnection(connection, stmt);
     }
 
-    
 }

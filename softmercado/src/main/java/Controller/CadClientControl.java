@@ -1,21 +1,23 @@
 package Controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import Connection.ClientesDAO;
 import Model.Clientes;
-import javafx.event.ActionEvent;
+
 
 public class CadClientControl {
-    
+
     private List<Clientes> clientes;
     private DefaultTableModel modeloTableClien;
     private JTable tabelaClien;
-
 
     public CadClientControl(List<Clientes> clientes, DefaultTableModel modeloTableClien, JTable tabelaClien) {
         this.clientes = clientes;
@@ -28,27 +30,36 @@ public class CadClientControl {
 
         clientes = new ClientesDAO().listarTodos();
 
-        for(Clientes cliente : clientes){
+        for (Clientes cliente : clientes) {
 
-            modeloTableClien.addRow(new Object[]{
-                cliente.getCpf(),
-                cliente.getNome() 
+            modeloTableClien.addRow(new Object[] {
+                    cliente.getCpf()
             });
         }
     }
 
-    public void cadastrar(String cpf, String nome) {
-        new ClientesDAO().cadastrar(nome, cpf);
-        atualizarTableClie();
+    public void cadastrar(JButton btnAciona, String cpf, JTextField inptTexto)  {
+
+        btnAciona.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ClientesDAO().cadastrar(cpf);
+                atualizarTableClie();
+                /* inptTexto.setText(""); */
+
+            }
+
+        });
+
     }
 
-
-    public void atualizar(String cpf, String nome) {
-        new ClientesDAO().atualizar(nome, cpf);
-    
-        atualizarTableClie();
-    }
-
+    /*
+     * public void atualizar(String cpf, String nome) {
+     * new ClientesDAO().atualizar(nome, cpf);
+     * 
+     * atualizarTableClie();
+     * }
+     */
 
     public void apagar(String cpf) {
         new ClientesDAO().apagar(cpf);
@@ -56,12 +67,10 @@ public class CadClientControl {
         atualizarTableClie();
     }
 
-    public void verificar(String nome, String cpf) {
-        new ClientesDAO().verificar(nome, cpf);
+    public void verificar(String cpf) {
+        new ClientesDAO().verificar(cpf);
 
         atualizarTableClie();
     }
 
-
-  
 }

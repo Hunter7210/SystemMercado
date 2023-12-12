@@ -4,23 +4,18 @@ package Model;
 public class Clientes {
     
     //Atributos
-    private String nome;
+   
     private String cpf;
-    private String senha;
+
 
     //Construtor
-    public Clientes(String nome, String cpf) {
-        this.nome = nome;
+    public Clientes(String cpf) {
+
         this.cpf = cpf;
     }
 
     //Criação Getters and Setters
-    public String getNome() {
-        return nome;
-    }
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+  
     public String getCpf() {
         return cpf;
     }

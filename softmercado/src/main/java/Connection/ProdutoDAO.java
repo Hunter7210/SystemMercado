@@ -20,7 +20,7 @@ public class ProdutoDAO {
     }
 
     public void criarTabela() {
-        String sql = "CREATE TABLE IF NOT EXISTS produt_sysmercad (id INT AUTO_INCREMENT PRIMATY KEY, codigoprod VARCHAR(10), nome VARCHAR(20), datavenc VARCHAR(10), lote VARCHAR(10), dataentr VARCHAR(10), quantprod int)";
+        String sql = "CREATE TABLE IF NOT EXISTS produt_sysmercad (id INT AUTO_INCREMENT PRIMARY KEY, codigoprod VARCHAR(10), nome VARCHAR(20), datavenc VARCHAR(10), lote VARCHAR(10), dataentr VARCHAR(10), quantprod int)";
 
         try (Statement stmt = this.connection.createStatement()) {
             stmt.execute(sql);

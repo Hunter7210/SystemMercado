@@ -114,8 +114,25 @@ public class JanelaPrincipal extends JFrame {
 
         // Metodo para mudar as paginas
         //Mudando da pagina inicial para a pagina de Cadastro Geral
+        
         ControleCards.trocarPagina(card, cadastGer, paineDisplay, "Cadastro Geral");
-
+        
+        ControleCards.trocarPagina(card, cadasClie, paineDisplay, "Cadastrar Cliente");
+        
+        ControleCards.trocarPagina(card, cadasProdGere, paineDisplay, "Cadastrar Produto");
+        
+        ControleCards.trocarPagina(card, club, paineDisplay, "Clube");
+        
+        ControleCards.trocarPagina(card, querCadas, paineDisplay, "Quer se Cadastrar");
+        
+        ControleCards.trocarPagina(card, loginClien, paineDisplay, "Faça o login");
+        
+        ControleCards.trocarPagina(card, estoq, paineDisplay, "Estoque");
+        
+        ControleCards.trocarPagina(card, compra, paineDisplay, "Compra");
+        
+        ControleCards.trocarPagina(card, regisVend, paineDisplay, "Vendas Registro");
+        
 
 
 

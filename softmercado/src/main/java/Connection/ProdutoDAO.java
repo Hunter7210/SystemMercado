@@ -23,12 +23,12 @@ public class ProdutoDAO {
     public void criarTabela() {
         String sql = "CREATE TABLE IF NOT EXISTS produt_sysmercad (" +
                 "    id SERIAL PRIMARY KEY," +
-                "    codigoprod VARCHAR(10)," +
                 "    nome VARCHAR(20)," +
-                "    datavenc VARCHAR(10)," +
+                "    codigobarra VARCHAR(10)," +
                 "    lote VARCHAR(10)," +
+                "    quantLot INT," +
                 "    dataentr VARCHAR(10)," +
-                "    quantprod INT" +
+                "    datavenc VARCHAR(10)" +
                 ");";
 
         try (Statement stmt = this.connection.createStatement()) {
@@ -61,12 +61,12 @@ public class ProdutoDAO {
                 // Para cada registro no ResultSet, cria um objeto Carros com os valores do
                 // registro
                 Produtos produto = new Produtos(
-                        rs.getString("codigoprod"),
                         rs.getString("nome"),
-                        rs.getString("datavenc"),
+                        rs.getString("codigobarra"),
                         rs.getString("lote"),
-                        rs.getString("dataentr"),
-                        rs.getString("quantprod"));
+                        rs.getString("quantLot"),
+                        rs.getString("dataEntr"),
+                        rs.getString("dataVenc"));
                 produtos.add(produto);
             }
         } catch (SQLException ex) {
@@ -80,8 +80,7 @@ public class ProdutoDAO {
     }
 
     public List<Produtos> listar_apenas_um() {
-         PreparedStatement stmt = null;
-
+        PreparedStatement stmt = null;
 
         // Declaração do objeto PreparedStatement para executar a consulta
         ResultSet rs = null;
@@ -101,12 +100,12 @@ public class ProdutoDAO {
                 // Para cada registro no ResultSet, cria um objeto Carros com os valores do
                 // registro
                 Produtos produto = new Produtos(
-                        rs.getString("codigoprod"),
                         rs.getString("nome"),
-                        rs.getString("datavenc"),
+                        rs.getString("codigobarra"),
                         rs.getString("lote"),
-                        rs.getString("dataentr"),
-                        rs.getString("quantprod"));
+                        rs.getString("quantLot"),
+                        rs.getString("dataEntr"),
+                        rs.getString("dataVenc"));
                 produtos.add(produto);
             }
         } catch (SQLException ex) {
@@ -118,23 +117,52 @@ public class ProdutoDAO {
         return produtos; // Retorna a lista de carros recuperados do banco de dados
 
     }
-    
 
-    public void atualizar(String id, String codigoBarra, String nome, String dataVenc, String lote, String dataEntr,
-            String quantLot) {
+    // Cadastrar Carro no banco
+    public void cadastrar(String nome, String codigoBarra, String lote, int quantLot, String dataEntr,
+            String dataVenc) {
+
+
+
+        PreparedStatement stmt = null;
+        // Define a instrução SQL parametrizada para cadastrar na tabela
+
+        String sql = "INSERT INTO produt_sysmercad (nome, codigobarra, lote, quantLot, dataentr, datavenc) VALUES (?,?,?,?,?,?)";
+
+        try {
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, nome);
+            stmt.setString(2, codigoBarra);
+            stmt.setString(3, lote);
+            stmt.setInt(4, quantLot);
+            stmt.setString(5, dataEntr);
+            stmt.setString(6, dataVenc);
+            stmt.executeUpdate();
+            System.out.println("Dados inseridos com sucesso");
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao inserir dados no banco de dados.", e);
+
+        } finally {
+            ConnectionFactory.closeConnection(connection, stmt);
+        }
+
+    }
+
+    public void atualizar(String id, String nome, String codigoBarra, String lote, String quantLot, String dataEntr,
+            String dataVenc) {
 
         PreparedStatement stmt = null;
         // Define a instrução SQL parametrizada para atualizar dados pela placa
 
-        String sql = "UPDATE produt_sysmercad SET codigoprod = ?, nome = ?, datavenc= ?, lote = ?, dataentr= ?, quantprod = ?  WHERE id = ?";
+        String sql = "UPDATE produt_sysmercad SET nome = ?, codigobarra = ?, lote = ?, quantLot = ?, dataentr= ?, datavenc= ?  WHERE id = ?";
         try {
             stmt = connection.prepareStatement(sql);
-            stmt.setString(1, codigoBarra);
-            stmt.setString(2, nome);
-            stmt.setString(3, dataVenc);
-            stmt.setString(4, lote);
+            stmt.setString(1, nome);
+            stmt.setString(2, codigoBarra);
+            stmt.setString(3, lote);
+            stmt.setString(4, quantLot);
             stmt.setString(5, dataEntr);
-            stmt.setString(6, quantLot);
+            stmt.setString(6, dataVenc);
             stmt.setString(7, id);
             stmt.executeUpdate();
             System.out.println("Dados atualizados com sucesso");

@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 
 import Connection.ProdutoDAO;
 import Connection.VendasDAO;
-import Controller.VendasControl;
+import Controller.EscolGerenControl;
 import Model.Clientes;
 import Model.Produtos;
 import Model.Vendas;
@@ -90,30 +90,21 @@ public class PainelGerencEstoq extends JPanel {
         // Criar tabela vendas
         new VendasDAO().criarTabela();
 
+        EscolGerenControl controlGerencEstoq = new EscolGerenControl();
+    
+        controlGerencEstoq.limparCombo(limpar, codProd, codLote, codVenci);
+        controlGerencEstoq.atualizarTabela();
+
+
+
         // Atualizar os dados da tabela
-        /* atualizarTabela();
- */
+
         // Instanciando um obj da classe VendasConstrol
-       /*  VendasControl operacoesVend = new VendasControl(vendas, modeloTableGerenc, tabelaGerencEstoq); */
+        /*
+         * VendasControl operacoesVend = new VendasControl(vendas, modeloTableGerenc,
+         * tabelaGerencEstoq);
+         */
         // Buscando o item selecionado no comboBox
     }
-
-    private void limparCombo(Object combo1, Object combo2) {
-        codProd.setSelectedIndex(0);
-        codLote.setSelectedIndex(0);
-        codVenci.setSelectedIndex(0);
-    }
-
-   /*  // Método para atualizar a tabela de exibição com dados do banco de dados
-    private void atualizarTabela() {
-        modeloTableGerenc.setRowCount(0); // Limpa todas as linhas existentes na tabela
-        vendas = new VendasDAO().listarVendas();
-        // Obtém as vendas atualizados do banco de dados
-        for (Vendas venda : vendas) {
-            // Adiciona os dados de cada venda como uma nova linha na tabela Swing
-            modeloTableGerenc.addRow(new Object[] { venda.getDataVenda(), venda.getCliente(), venda.getCarroVendi(),
-                    venda.getValorCompra() });
-        }
-    } */
 
 }

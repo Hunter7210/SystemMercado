@@ -23,9 +23,7 @@ public class ControlCards {
             public void mouseClicked(MouseEvent e) {
                 nomeDoLayout.show(nomePainelComCard, nomePagMost);
                 nomeBtn.setForeground(Color.GREEN);
-
             }
-
         });
     }
 }

@@ -91,12 +91,12 @@ public class PainelGerencEstoq extends JPanel {
         new VendasDAO().criarTabela();
 
         EscolGerenControl controlGerencEstoq = new EscolGerenControl();
-    
-        controlGerencEstoq.limparCombo(limpar, codProd, codLote, codVenci);
         
+        atualizarTabela();
+
+        controlGerencEstoq.limparCombo(limpar, codProd, codLote, codVenci);
+
         controlGerencEstoq.filtrarTabela(btnFiltrar);
-
-
 
         // Atualizar os dados da tabela
 
@@ -106,6 +106,20 @@ public class PainelGerencEstoq extends JPanel {
          * tabelaGerencEstoq);
          */
         // Buscando o item selecionado no comboBox
+    }
+    
+    public void atualizarTabela() {
+        {
+            /* modeloTableGerenc.setRowCount(0); */ // Limpa todas as linhas existentes na tabela
+            produtos = new ProdutoDAO().listartodos();
+            // Obtém as vendas atualizados do banco de dados
+            for (Produtos produto : produtos) {
+                // Adiciona os dados de cada venda como uma nova linha na tabela Swing
+                modeloTableGerenc.addRow(new Object[] { produto.getNome(), produto.getCodigoBarra(),
+                        produto.getLote(), produto.getQuantLot(), produto.getDataEntr(), produto.getDataVenc()
+                });
+            }
+        }
     }
 
 }

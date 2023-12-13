@@ -1,5 +1,6 @@
 package Controller;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
@@ -11,7 +12,6 @@ import javax.swing.table.DefaultTableModel;
 
 import Connection.ProdutoDAO;
 import Model.Produtos;
-import javafx.event.ActionEvent;
 
 public class CadProdControl {
 
@@ -26,7 +26,6 @@ public class CadProdControl {
     }
 
     public void atualizarTableProd() {
-        modeloTableProd.setRowCount(0); // Limpa todas as linhas existentes na tabela
 
         produtos = new ProdutoDAO().listartodos();
 
@@ -37,6 +36,7 @@ public class CadProdControl {
                     produto.getDataEntr(), produto.getDataVenc()
             });
         }
+
     }
 
     public void cadastrar(JButton btnAciona, JTextField inptTexto1, JTextField inptTexto2, JTextField inptTexto3,
@@ -44,20 +44,21 @@ public class CadProdControl {
 
         btnAciona.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
 
                 if (!inptTexto1.getText().isEmpty() && !inptTexto2.getText().isEmpty()
                         && !inptTexto3.getText().isEmpty() && !inptTexto4.getText().isEmpty()
                         && !inptTexto5.getText().isEmpty() && !inptTexto6.getText().isEmpty()) {
-                    
-                            int intInpt4 = Integer.parseInt(inptTexto4.getText());
 
-                            // Fazer a classe para bloquear de escrever um valor errado
+                    int intInpt4 = Integer.parseInt(inptTexto4.getText());
+
+                    // Fazer a classe para bloquear de escrever um valor errado
                     new ProdutoDAO().cadastrar(inptTexto1.getText(), inptTexto2.getText(), inptTexto3.getText(),
                             intInpt4, inptTexto5.getText(), inptTexto6.getText());
 
-                            
-                    atualizarTableProd();
+                    JOptionPane.showMessageDialog(null, "Cadastro de produto realizado com sucesso");
+
+                    /* atualizarTableProd(); */
                     inptTexto1.setText("");
                     inptTexto2.setText("");
                     inptTexto3.setText("");

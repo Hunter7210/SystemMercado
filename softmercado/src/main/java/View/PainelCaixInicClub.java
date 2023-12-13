@@ -10,14 +10,14 @@ import javax.swing.JPanel;
 /**
  * PainelCaixInic
  */
-public class PainelCaixInic extends JPanel {
+public class PainelCaixInicClub extends JPanel {
 
     //Atributos
     private JLabel tit;
     private JButton confirm, cancel;
     private JPanel painelPrici, painelBtns;
 
-    public PainelCaixInic() {
+    public PainelCaixInicClub() {
         super();
 
         BorderLayout borderLa = new BorderLayout(); 

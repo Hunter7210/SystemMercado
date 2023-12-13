@@ -4,15 +4,13 @@ public class Vendas {
 
     //Atributos
     private String dataVenda;
-    private String cliente;
     private String quantVendi;
     private String codProd;
     private String valorCompra;
     
     //Cosntrutor
-    public Vendas(String dataVenda, String cliente, String quantVendi, String codProd, String valorCompra) {
+    public Vendas(String dataVenda, String quantVendi, String codProd, String valorCompra) {
         this.dataVenda = dataVenda;
-        this.cliente = cliente;
         this.quantVendi = quantVendi;
         this.codProd = codProd;
         this.valorCompra = valorCompra;
@@ -25,12 +23,6 @@ public class Vendas {
     }
     public void setDataVenda(String dataVenda) {
         this.dataVenda = dataVenda;
-    }
-    public String getCliente() {
-        return cliente;
-    }
-    public void setCliente(String cliente) {
-        this.cliente = cliente;
     }
     public String getQuantVendi() {
         return quantVendi;

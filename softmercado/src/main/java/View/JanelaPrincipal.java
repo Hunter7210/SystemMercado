@@ -10,7 +10,6 @@ import Controller.ControlCards;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 
@@ -47,7 +46,7 @@ public class JanelaPrincipal extends JFrame {
         PainelCadProd cadasProd = new PainelCadProd();
         paineDisplay.add(cadasProd, "Cadastrar Produto");
 
-        PainelCaixInic escolhaCai = new PainelCaixInic();
+        PainelCaixInicClub escolhaCai = new PainelCaixInicClub();
         paineDisplay.add(escolhaCai, "Clube");
 
         PainelEscolCaix querCadastr = new PainelEscolCaix();

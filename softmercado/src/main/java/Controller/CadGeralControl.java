@@ -12,7 +12,7 @@ public class CadGeralControl {
 
     public void Adicionar(JButton btn) {
         btn.addActionListener(e -> {
-            System.out.println("TESTE");
+            
 
         });
     }

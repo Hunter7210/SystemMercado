@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JTextField;
+
 import Model.Vendas;
 
 public class VendasDAO {
@@ -24,7 +26,7 @@ public class VendasDAO {
     // Criação da tabela
     public void criarTabela() {
 
-        String sql = "CREATE TABLE IF NOT EXISTS vendas_sysmercad (datavenda VARCHAR(10), cliente VARCHAR (20), quantvendi int, codprod VARCHAR(10) PRIMARY KEY, valorcompra int)";
+        String sql = "CREATE TABLE IF NOT EXISTS vendas_sysmercad (datavenda VARCHAR(255), quantvendi VARCHAR(255), codprod VARCHAR(255) PRIMARY KEY, valorcompra VARCHAR(255))";
 
         try (Statement stmt = this.connection.createStatement()) {
             stmt.execute(sql);
@@ -58,7 +60,6 @@ public class VendasDAO {
                 // registro
                 Vendas venda = new Vendas(
                         rs.getString("datavenda"),
-                        rs.getString("cliente"),
                         rs.getString("quantVendi"),
                         rs.getString("codProd"),
                         rs.getString("valorCompra"));
@@ -74,18 +75,17 @@ public class VendasDAO {
     }
 
     // Cadastrar venda
-    public void cadastrar(String dataVenda, String cliente, String quantVendi, String codProd, String valorCompra) {
+    public void cadastrar(String dataVenda , String quantVendi, String codProd, String valorCompra) {
         PreparedStatement stmt = null;
         // Define a instrução SQL parametrizada para cadastrar na tabela
 
-        String sql = "INSERT INTO vendas_sysmercad (datavenda, cliente, quantvendi, codprod, valorcompra)";
+        String sql = "INSERT INTO vendas_sysmercad (datavenda, quantvendi, codprod, valorcompra) VALUES (?,?,?,?)";
         try {
             stmt = connection.prepareStatement(sql);
             stmt.setString(1, dataVenda);
-            stmt.setString(2, cliente);
-            stmt.setString(3, quantVendi);
-            stmt.setString(4, codProd);
-            stmt.setString(5, valorCompra);
+            stmt.setString(2, quantVendi);
+            stmt.setString(3, codProd);
+            stmt.setString(4, valorCompra);
 
             // Executa a consulta
             stmt.executeUpdate();

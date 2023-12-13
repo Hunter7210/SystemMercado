@@ -17,8 +17,6 @@ public class PainelLoginControlClien {
             public void actionPerformed(ActionEvent e) {
                 new ClientesDAO().buscarUsuario(textarea1.getText());
 
-            
-
             }
         });
 

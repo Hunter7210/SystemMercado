@@ -20,6 +20,7 @@ import Controller.VendasControl;
 import Model.Clientes;
 import Model.Produtos;
 import Model.Vendas;
+import logs.RegistroSistema;
 
 public class PainelVendas extends JPanel {
 
@@ -81,21 +82,17 @@ public class PainelVendas extends JPanel {
         add(jSPane);
 
         modeloTableRegis = new DefaultTableModel(new Object[][] {},
-                new String[] { "Data Venda", "Carro Vendido", "Cliente" });
+                new String[] { "datavenda", "quantVendi", "codProd", "valorCompra"});
         tabelarRegisVend = new JTable(modeloTableRegis);
         jSPane.setViewportView(tabelarRegisVend);
 
         // Criar tabela vendas
         new VendasDAO().criarTabela();
-
-
-
-
         
         VendasControl vendasCont = new VendasControl(vendas, modeloTableRegis, tabelarRegisVend);
-        vendasCont.limparCombo(limpar ,codProd, codPeri);
+        vendasCont.limparCombo(limpar, codProd, codPeri);
 
-        vendasCont.atualizarTabela(modeloTableRegis, vendas);
+        atualizarTabela(modeloTableRegis, vendas);
  
     }
 
@@ -106,6 +103,20 @@ public class PainelVendas extends JPanel {
         VendasControl operacoesVend = new VendasControl(vendas, modeloTableRegis, tabelarRegisVend);
         // Buscando o item selecionado no comboBox
  */
+ // Método para atualizar a tabela de exibição com dados do banco de dados
+    public void atualizarTabela(DefaultTableModel modeloTabela, List<Vendas> vendas) {
+        modeloTabela.setRowCount(0); // Limpa todas as linhas existentes na tabela
+        vendas = new VendasDAO().listarVendas();
+
+        RegistroSistema.registroOperacao("Usuario atualizou a tabela");
+
+        // Obtém as vendas atualizados do banco de dados
+        for (Vendas venda : vendas) {
+            // Adiciona os dados de cada venda como uma nova linha na tabela Swing
+            modeloTabela.addRow(new Object[] { venda.getCodProd(), venda.getDataVenda(),
+                    venda.getValorCompra(), venda.getQuantVendi() });
+        }
+    }
 
 
 }

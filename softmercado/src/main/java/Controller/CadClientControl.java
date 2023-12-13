@@ -5,12 +5,14 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import Connection.ClientesDAO;
 import Model.Clientes;
+import logs.RegistroSistema;
 
 public class CadClientControl {
 
@@ -42,12 +44,28 @@ public class CadClientControl {
         btnAciona.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ClientesDAO().cadastrar(inptTexto.getText());
 
-                atualizarTableClie();
-                inptTexto.setText("");
+                if (!inptTexto.getText().isEmpty()) {
+
+            
+        
+
+                        new ClientesDAO().cadastrar(inptTexto.getText());
+                        RegistroSistema.registroOperacao("Usuario se cadastrou com o CPF " + inptTexto.getText());
+
+                        atualizarTableClie();
+                        JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
+                        inptTexto.setText("");
+                    /* } else {
+                        JOptionPane.showMessageDialog(null, "Cliente já esta cadastrado");
+                    } */
+                } else {
+                    JOptionPane.showMessageDialog(null, "Por favor preencha todos os campos");
+                }
+
             }
         });
+
     }
 
     /*
@@ -58,14 +76,35 @@ public class CadClientControl {
      * }
      */
 
-    public void apagar(String cpf) {
-        new ClientesDAO().apagar(cpf);
+    public void apagar(JButton btnAciona, String cpf) {
 
-        atualizarTableClie();
+        btnAciona.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                // Pergunta se o usuario quer realmente se cadastrar
+                int podCadast = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja apagar os dados?",
+                        "Escolha uma opção", JOptionPane.YES_NO_OPTION);
+                // Verifica se a escolha foi YES
+                if (podCadast == JOptionPane.YES_OPTION) {
+
+                    new ClientesDAO().apagar(cpf);
+                    RegistroSistema.registroOperacao("Usuario do CPF: " + cpf + "apagou os dados");
+
+                    atualizarTableClie();
+                    JOptionPane.showMessageDialog(null, "Apagou os dados com sucesso!");
+
+                } else {
+                    // Fecha o JOptionPane automaticamente
+                }
+            }
+        });
     }
 
     public void buscarUsuario(String cpf) {
         new ClientesDAO().buscarUsuario(cpf);
+
+        RegistroSistema.registroOperacao("Usuario do CPF: " + cpf + "buscou os dados");
 
         atualizarTableClie();
     }

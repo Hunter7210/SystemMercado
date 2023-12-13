@@ -49,21 +49,6 @@ public class EscolGerenControl {
         });
     }
 
-    public void atualizarTabela() {
-        {
-            /* modeloTableGerenc.setRowCount(0); */ // Limpa todas as linhas existentes na tabela
-            produtos = new ProdutoDAO().listartodos();
-            // Obtém as vendas atualizados do banco de dados
-            for (Produtos produto : produtos) {
-                // Adiciona os dados de cada venda como uma nova linha na tabela Swing
-                modeloTableGerenc.addRow(new Object[] { produto.getNome(), produto.getCodigoBarra(),
-                        produto.getLote(), produto.getQuantLot(), produto.getDataEntr(), produto.getDataVenc()
-                });
-            }
-        }
-    }
-
-
     public void filtrarTabela(JButton btnAciona) {
         
         btnAciona.addActionListener(new ActionListener() {
@@ -73,7 +58,7 @@ public class EscolGerenControl {
                 
 
 
-                atualizarTabela();
+
             }
         });
     }

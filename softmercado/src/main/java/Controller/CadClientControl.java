@@ -64,8 +64,8 @@ public class CadClientControl {
         atualizarTableClie();
     }
 
-    public void verificar(String cpf) {
-        new ClientesDAO().verificar(cpf);
+    public void buscarUsuario(String cpf) {
+        new ClientesDAO().buscarUsuario(cpf);
 
         atualizarTableClie();
     }

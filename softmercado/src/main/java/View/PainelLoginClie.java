@@ -8,8 +8,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import Controller.CadGeralControl;
+import Controller.PainelLoginControlClien;
 
-public class PainelLoginFunc extends JPanel {
+public class PainelLoginClie extends JPanel {
 
     // Atributos
     private JLabel tit, cpf;
@@ -17,7 +18,7 @@ public class PainelLoginFunc extends JPanel {
     private JButton btnEnvi;
     private JPanel painelPrincipal, painelConterComp, painelCPF;
 
-    public PainelLoginFunc() {
+    public PainelLoginClie() {
         super();
 
         GridLayout grid3x1 = new GridLayout(4, 1);
@@ -46,6 +47,10 @@ public class PainelLoginFunc extends JPanel {
         painelConterComp.add(painelCPF);
         painelConterComp.add(btnEnvi);
 
+
+        PainelLoginControlClien controlLogin = new PainelLoginControlClien();
+
+        controlLogin.verificarUsuario(btnEnvi, inptCpf);
 
     }
 }

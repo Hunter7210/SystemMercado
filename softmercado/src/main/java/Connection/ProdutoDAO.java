@@ -1,5 +1,7 @@
 package Connection;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JButton;
 
 import Model.Produtos;
 
@@ -122,8 +126,6 @@ public class ProdutoDAO {
     public void cadastrar(String nome, String codigoBarra, String lote, int quantLot, String dataEntr,
             String dataVenc) {
 
-
-
         PreparedStatement stmt = null;
         // Define a instrução SQL parametrizada para cadastrar na tabela
 
@@ -189,4 +191,6 @@ public class ProdutoDAO {
         }
         ConnectionFactory.closeConnection(connection, stmt);
     }
+
+
 }

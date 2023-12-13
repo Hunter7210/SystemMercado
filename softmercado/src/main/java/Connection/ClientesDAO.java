@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JTextField;
+
 import Model.Clientes;
 
 public class ClientesDAO {
@@ -122,28 +124,47 @@ public class ClientesDAO {
         ConnectionFactory.closeConnection(connection, stmt);
     }
 
-    public void verificar(String cpf) {
+    /*
+     * public void verificar(String cpf) {
+     * PreparedStatement stmt = null;
+     * 
+     * String sql = "SELECT * FROM clientes_sysmercad WHERE cpf = ?";
+     * 
+     * try {
+     * stmt = connection.prepareStatement(sql);
+     * 
+     * stmt.setString(1, cpf);
+     * int result = stmt.executeUpdate(); // Executa a instrução
+     * 
+     * System.out.println("Dado Verificado com sucesso");
+     * if (result != 0) {
+     * System.out.println("Usuario encontrado!");
+     * } else {
+     * System.out.println("Usuario não encontrado!");
+     * }
+     * 
+     * } catch (SQLException ex) {
+     * throw new RuntimeException("Erro ao .", ex);
+     * }
+     * ConnectionFactory.closeConnection(connection, stmt);
+     * }
+     */
+
+    public void buscarUsuario(String cpf) {
         PreparedStatement stmt = null;
-
+        ResultSet rs = null;
         String sql = "SELECT * FROM clientes_sysmercad WHERE cpf = ?";
-
         try {
             stmt = connection.prepareStatement(sql);
-
             stmt.setString(1, cpf);
-            int result = stmt.executeUpdate(); // Executa a instrução
+            rs = stmt.executeQuery();
+            System.out.println("Usuario encontrado");
+        } catch (SQLException e) {
+            throw new RuntimeException("Usuario não existe.", e);
 
-            System.out.println("Dado Verificado com sucesso");
-            if (result != 0) {
-                System.out.println("Usuario encontrado!");
-            } else {
-                System.out.println("Usuario não encontrado!");
-            }
-
-        } catch (SQLException ex) {
-            throw new RuntimeException("Erro ao .", ex);
+        } finally {
+            ConnectionFactory.closeConnection(connection, stmt);
         }
-        ConnectionFactory.closeConnection(connection, stmt);
     }
 
 }

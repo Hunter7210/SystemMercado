@@ -62,4 +62,19 @@ public class EscolGerenControl {
             }
         }
     }
+
+
+    public void filtrarTabela(JButton btnAciona) {
+        
+        btnAciona.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                
+
+
+                atualizarTabela();
+            }
+        });
+    }
 }

@@ -53,7 +53,7 @@ public class JanelaPrincipal extends JFrame {
         PainelEscolCaix querCadastr = new PainelEscolCaix();
         paineDisplay.add(querCadastr, "Quer se Cadastrar");
 
-        PainelLoginFunc login = new PainelLoginFunc();
+        PainelLoginClie login = new PainelLoginClie();
         paineDisplay.add(login, "Faça o login");
 
         PainelGerencEstoq estoque = new PainelGerencEstoq();

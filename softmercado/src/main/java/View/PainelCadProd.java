@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -17,8 +18,8 @@ import Model.Produtos;
 
 public class PainelCadProd extends JPanel {
 
-        private JLabel tit, nomeProd, codProd, loteProd, qtdloteProd, datEntreg, datVenc;
-        private JTextField nomeProdInpt, codProdInpt, loteProdInpt, qtdLoteProdInpt, datEntregInpt,
+        private JLabel tit, nomeProd, codProd, precUitProd, loteProd, qtdloteProd, datEntreg, datVenc;
+        private JTextField nomeProdInpt, codProdInpt, precUitProdInpt, loteProdInpt, qtdLoteProdInpt, datEntregInpt,
                         datVencInpt;
         private JButton btnEnvi;
         private JPanel painelPrinc, painelContEle, painelNome, painelCod, painelPrecUnit, painelLote, painelQtdLote,
@@ -60,15 +61,13 @@ public class PainelCadProd extends JPanel {
                 codProdInpt = new JTextField("Codigo do Produto");
                 painelCod.add(codProdInpt);
 
-                /*
-                 * // Preç Unit
-                 * painelPrecUnit = new JPanel();
-                 * painelPrecUnit.setLayout(grid2x1);
-                 * precUitProd = new JLabel("Valor unitario:");
-                 * painelPrecUnit.add(precUitProd);
-                 * precUitProdInpt = new JTextField("Valor Unitario");
-                 * painelPrecUnit.add(precUitProdInpt);
-                 */
+                // Preç Unit
+                painelPrecUnit = new JPanel();
+                painelPrecUnit.setLayout(grid2x1);
+                precUitProd = new JLabel("Valor unitario:");
+                painelPrecUnit.add(precUitProd);
+                precUitProdInpt = new JTextField("Valor Unitario");
+                painelPrecUnit.add(precUitProdInpt);
 
                 // Lote
                 painelLote = new JPanel();
@@ -107,7 +106,7 @@ public class PainelCadProd extends JPanel {
                 painelContEle.add(tit);
                 painelContEle.add(painelNome);
                 painelContEle.add(painelCod);
-                /* painelContEle.add(painelPrecUnit); */
+                painelContEle.add(painelPrecUnit);
                 painelContEle.add(painelLote);
                 painelContEle.add(painelQtdLote);
                 painelContEle.add(painelDataEntr);
@@ -115,13 +114,40 @@ public class PainelCadProd extends JPanel {
 
                 painelContEle.add(btnEnvi);
 
+                // tabela de carros
+                JScrollPane jSPane = new JScrollPane();
+                add(jSPane);
+
+                modeloTableProd = new DefaultTableModel(new Object[][] {},
+                                new String[] { "Lote", "Nome/Codigo Produto", "Quantidade Restante", "Data de entrega",
+                                                "Data Vencimento" });
+                tabelaProd = new JTable(modeloTableProd);
+                jSPane.setViewportView(tabelaProd);
+
                 new ProdutoDAO().criarTabela();
 
                 CadProdControl controlCadasProd = new CadProdControl(produtos, modeloTableProd, tabelaProd);
 
-                controlCadasProd.cadastrar(btnEnvi, nomeProdInpt, codProdInpt, loteProdInpt, qtdLoteProdInpt,
+                controlCadasProd.cadastrar(btnEnvi, nomeProdInpt, codProdInpt, precUitProdInpt, loteProdInpt,
+                                qtdLoteProdInpt,
                                 datEntregInpt,
                                 datVencInpt);
+                atualizarTableProd();
+
+        }
+
+        public void atualizarTableProd() {
+
+                produtos = new ProdutoDAO().listartodos();
+
+                for (Produtos produto : produtos) {
+
+                        modeloTableProd.addRow(new Object[] {
+                                        produto.getNome(), produto.getCodigoBarra(), produto.getprecoUnit(),
+                                        produto.getLote(), produto.getQuantLot(),
+                                        produto.getDataEntr(), produto.getDataVenc()
+                        });
+                }
 
         }
 }

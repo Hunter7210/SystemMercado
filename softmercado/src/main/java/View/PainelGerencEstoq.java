@@ -96,7 +96,7 @@ public class PainelGerencEstoq extends JPanel {
 
         controlGerencEstoq.limparCombo(limpar, codProd, codLote, codVenci);
 
-        controlGerencEstoq.filtrarTabela(btnFiltrar);
+        /* controlGerencEstoq.filtrarTabela(btnFiltrar); */
 
         // Atualizar os dados da tabela
 

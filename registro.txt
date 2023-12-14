@@ -43,3 +43,20 @@ Usuario atualizou a tabela
 Venda cadastrada: Data:13/50 16:50:32 PMQuantidade: 45Codigo Produto: 454 Queijo Valor: javax.swing.JTextField[,0,36,208x36,layout=javax.swing.plaf.basic.BasicTextUI$UpdateHandler,alignmentX=0.0,alignmentY=0.0,border=javax.swing.plaf.BorderUIResource$CompoundBorderUIResource@54f7df0f,flags=296,maximumSize=,minimumSize=,preferredSize=,caretColor=sun.swing.PrintColorUIResource[r=51,g=51,b=51],disabledTextColor=javax.swing.plaf.ColorUIResource[r=184,g=207,b=229],editable=true,margin=javax.swing.plaf.InsetsUIResource[top=0,left=0,bottom=0,right=0],selectedTextColor=sun.swing.PrintColorUIResource[r=51,g=51,b=51],selectionColor=javax.swing.plaf.ColorUIResource[r=184,g=207,b=229],columns=0,columnWidth=0,command=,horizontalAlignment=LEADING]
 Usuario atualizou a tabela
 Venda cadastrada: Data:13/53 16:53:19 PMQuantidade: 45Codigo Produto: 2710 Tomate Valor: javax.swing.JTextField[,0,36,208x36,layout=javax.swing.plaf.basic.BasicTextUI$UpdateHandler,alignmentX=0.0,alignmentY=0.0,border=javax.swing.plaf.BorderUIResource$CompoundBorderUIResource@5c3b7b5b,flags=296,maximumSize=,minimumSize=,preferredSize=,caretColor=sun.swing.PrintColorUIResource[r=51,g=51,b=51],disabledTextColor=javax.swing.plaf.ColorUIResource[r=184,g=207,b=229],editable=true,margin=javax.swing.plaf.InsetsUIResource[top=0,left=0,bottom=0,right=0],selectedTextColor=sun.swing.PrintColorUIResource[r=51,g=51,b=51],selectionColor=javax.swing.plaf.ColorUIResource[r=184,g=207,b=229],columns=0,columnWidth=0,command=,horizontalAlignment=LEADING]
+Usuario atualizou a tabela
+Usuario atualizou a tabela
+Usuario atualizou a tabela
+Usuario atualizou a tabela
+Usuario atualizou a tabela
+Usuario atualizou a tabela
+Usuario atualizou a tabela
+Usuario atualizou a tabela
+Usuario atualizou a tabela
+Usuario atualizou a tabela
+Usuario atualizou a tabela
+Usuario atualizou a tabela
+Usuario atualizou a tabela
+Usuario atualizou a tabela
+Usuario atualizou a tabela
+Usuario atualizou a tabela
+Usuario atualizou a tabela

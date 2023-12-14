@@ -29,8 +29,9 @@ public class ProdutoDAO {
                 "    id SERIAL PRIMARY KEY," +
                 "    nome VARCHAR(20)," +
                 "    codigobarra VARCHAR(10)," +
+                "    precounit VARCHAR(18)," +
                 "    lote VARCHAR(10)," +
-                "    quantLot INT," +
+                "    quantLot VARCHAR(20)," +
                 "    dataentr VARCHAR(10)," +
                 "    datavenc VARCHAR(10)" +
                 ");";
@@ -67,6 +68,7 @@ public class ProdutoDAO {
                 Produtos produto = new Produtos(
                         rs.getString("nome"),
                         rs.getString("codigobarra"),
+                        rs.getString("precounit"),
                         rs.getString("lote"),
                         rs.getString("quantLot"),
                         rs.getString("dataEntr"),
@@ -83,7 +85,7 @@ public class ProdutoDAO {
 
     }
 
-    public List<Produtos> listar_apenas_um() {
+    public List<Produtos> listar_apenas_um(int id) {
         PreparedStatement stmt = null;
 
         // Declaração do objeto PreparedStatement para executar a consulta
@@ -106,6 +108,7 @@ public class ProdutoDAO {
                 Produtos produto = new Produtos(
                         rs.getString("nome"),
                         rs.getString("codigobarra"),
+                        rs.getString("precounit"),
                         rs.getString("lote"),
                         rs.getString("quantLot"),
                         rs.getString("dataEntr"),
@@ -123,22 +126,23 @@ public class ProdutoDAO {
     }
 
     // Cadastrar Carro no banco
-    public void cadastrar(String nome, String codigoBarra, String lote, int quantLot, String dataEntr,
+    public void cadastrar(String nome, String codigoBarra, String precoUnit, String lote, String quantLot, String dataEntr,
             String dataVenc) {
 
         PreparedStatement stmt = null;
         // Define a instrução SQL parametrizada para cadastrar na tabela
 
-        String sql = "INSERT INTO produt_sysmercad (nome, codigobarra, lote, quantLot, dataentr, datavenc) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO produt_sysmercad (nome, codigobarra, precounit, lote, quantLot, dataentr, datavenc) VALUES (?,?,?,?,?,?,?)";
 
         try {
             stmt = connection.prepareStatement(sql);
             stmt.setString(1, nome);
             stmt.setString(2, codigoBarra);
-            stmt.setString(3, lote);
-            stmt.setInt(4, quantLot);
-            stmt.setString(5, dataEntr);
-            stmt.setString(6, dataVenc);
+            stmt.setString(3, precoUnit);
+            stmt.setString(4, lote);
+            stmt.setString(5, quantLot);
+            stmt.setString(6, dataEntr);
+            stmt.setString(7, dataVenc);
             stmt.executeUpdate();
             System.out.println("Dados inseridos com sucesso");
         } catch (SQLException e) {
@@ -150,22 +154,23 @@ public class ProdutoDAO {
 
     }
 
-    public void atualizar(String id, String nome, String codigoBarra, String lote, String quantLot, String dataEntr,
+    public void atualizar(String id, String nome, String codigoBarra, String precoUnit, String lote, String quantLot, String dataEntr,
             String dataVenc) {
 
         PreparedStatement stmt = null;
         // Define a instrução SQL parametrizada para atualizar dados pela placa
 
-        String sql = "UPDATE produt_sysmercad SET nome = ?, codigobarra = ?, lote = ?, quantLot = ?, dataentr= ?, datavenc= ?  WHERE id = ?";
+        String sql = "UPDATE produt_sysmercad SET nome = ?, codigobarra = ?, precounit = ?, lote = ?, quantLot = ?, dataentr= ?, datavenc= ?  WHERE id = ?";
         try {
             stmt = connection.prepareStatement(sql);
             stmt.setString(1, nome);
             stmt.setString(2, codigoBarra);
-            stmt.setString(3, lote);
-            stmt.setString(4, quantLot);
-            stmt.setString(5, dataEntr);
-            stmt.setString(6, dataVenc);
-            stmt.setString(7, id);
+            stmt.setString(3, precoUnit);
+            stmt.setString(4, lote);
+            stmt.setString(5, quantLot);
+            stmt.setString(6, dataEntr);
+            stmt.setString(7, dataVenc);
+            stmt.setString(8, id);
             stmt.executeUpdate();
             System.out.println("Dados atualizados com sucesso");
         } catch (Exception e) {

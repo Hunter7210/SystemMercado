@@ -34,8 +34,8 @@ public class EscolGerenControl {
                 Object comb3SelecObj = combo3.getSelectedItem();
 
                 // Retona ao index inicial
-                if (!comb1SelecObj.equals("Selecionar o carro") || !comb2SelecObj.equals("Selecionar o cliente")
-                        || !comb3SelecObj.equals("Selecionar o carro")) {
+                if (!comb1SelecObj.equals("Selecionar o Produto") || !comb2SelecObj.equals("Selecionar o Lote")
+                        || !comb3SelecObj.equals("Selecionar o Periodo de vencimento")) {
                     combo1.setSelectedIndex(0);
                     combo2.setSelectedIndex(0);
                     combo3.setSelectedIndex(0);
@@ -48,18 +48,14 @@ public class EscolGerenControl {
             }
         });
     }
-
+/* 
     public void filtrarTabela(JButton btnAciona) {
         
         btnAciona.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
-                
-
-
 
             }
         });
-    }
+    } */
 }

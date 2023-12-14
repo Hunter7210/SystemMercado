@@ -26,7 +26,7 @@ public class VendasDAO {
     // Criação da tabela
     public void criarTabela() {
 
-        String sql = "CREATE TABLE IF NOT EXISTS vendas_sysmercad (datavenda VARCHAR(255), quantvendi VARCHAR(255), codprod VARCHAR(255) PRIMARY KEY, valorcompra VARCHAR(255))";
+        String sql = "CREATE TABLE IF NOT EXISTS vendas_sysmercad (id SERIAL PRIMARY KEY, datavenda VARCHAR(255), quantvendi VARCHAR(255), codprod VARCHAR(255), valorcompra VARCHAR(255))";
 
         try (Statement stmt = this.connection.createStatement()) {
             stmt.execute(sql);

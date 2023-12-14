@@ -158,6 +158,13 @@ public class ClientesDAO {
             stmt = connection.prepareStatement(sql);
             stmt.setString(1, cpf);
             rs = stmt.executeQuery();
+            // Executa a consulta e armazena os resultados no ResultSet
+            while (rs.next()) {
+                // Para cada registro no ResultSet, cria um objeto Carros com os valores do
+                // registro
+                Clientes cliente = new Clientes(rs.getString("cpf"));
+                clientes.add(cliente);
+            }
             System.out.println("Usuario encontrado");
         } catch (SQLException e) {
             throw new RuntimeException("Usuario não existe.", e);

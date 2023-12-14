@@ -3,54 +3,46 @@ package Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import Connection.ProdutoDAO;
 import Connection.VendasDAO;
 import Model.Clientes;
 import Model.Produtos;
 import Model.Vendas;
-import logs.RegistroSistema;
+/* import logs.RegistroSistema; */
 
 public class ClienInsProdControl {
 
     private List<Vendas> vendas;
+    private List<Produtos> produtos;
 
     private JTable tabelarRegisVend;
     private DefaultTableModel modeloTableRegis;
 
     // Método para atualizar a tabela de exibição com dados do banco de dados
 
-    public void atualizarTabela() {
-       
-        vendas = new VendasDAO().listarVendas();
-        // Obtém os carros atualizados do banco de dados
-        for (Vendas venda : vendas) {
-            // Adiciona os dados de cada carro como uma nova linha na tabela Swing
-            modeloTableRegis.addRow(new Object[] {
-                    venda.getDataVenda(), venda.getQuantVendi(), venda.getCodProd(),
-                    venda.getValorCompra()
-            });
-        }
-         /* modeloTableRegis.setRowCount(0); // Limpa todas as linhas existentes na tabela */
-    }
-
     // Método para cadastrar um novo carro no banco de dados
-    public void cadastrar(JButton btnAciona, JComboBox<String> combo1, String quantVendi, String valorCompra) {
+    public void cadastrar(JButton btnAciona, JComboBox<String> combo1, JTextField quantVendi) {
 
         btnAciona.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
 
                 Object prodSelecObj = combo1.getSelectedItem();
 
                 int prodSelecInt = combo1.getSelectedIndex();
+                System.out.println(prodSelecInt);
+                System.out.println(prodSelecObj);
 
                 if (prodSelecInt != 0) {
 
@@ -61,16 +53,39 @@ public class ClienInsProdControl {
                     String hora = new SimpleDateFormat("HH:mm:ss aaaa").format(dataEHora);
                     String horario = data + " " + hora;
 
+                    System.out.println(horario);
                     // Transformando o item para String
                     String prodSelecStr = prodSelecObj.toString();
 
-                    new VendasDAO().cadastrar(horario, quantVendi, prodSelecStr, valorCompra);
-                    new RegistroSistema().registroOperacao("Venda cadastrada: Data:" + horario
-                            + "Quantidade: " + quantVendi + "Codigo Produto: " + prodSelecStr + " Valor: "
-                            + valorCompra);
+                    System.out.println(prodSelecStr);
 
+                    // Pegando o valor da compra por unid
+                    new ProdutoDAO().listar_apenas_um(prodSelecInt);
+
+                    /*
+                     * for (Produtos produto : produtos) {
+                     * String value = formValorTota(Integer.parseInt(produto.getprecoUnit()),
+                     * quantVendi.getText());
+                     * 
+                     * }
+                     */
+
+                    String preco = produtos.get(prodSelecInt).getprecoUnit();
+
+                    String precoTotal = formValorTota(Integer.parseInt(preco), quantVendi.getText());
+                    System.out.println(preco);
+
+                    new VendasDAO().cadastrar(horario, quantVendi.getText(), prodSelecStr,
+                            formValorTota(Integer.parseInt(preco), quantVendi.getText()));
+                    /*
+                     * RegistroSistema registroSist = new RegistroSistema();
+                     * registroSist.registroOperacao("Venda cadastrada: Data:" + horario
+                     * + "Quantidade: " + quantVendi.getText() + "Codigo Produto: " + prodSelecStr +
+                     * " Valor: "
+                     * + valorCompra);
+                     */
                     // Chama o método de cadastro no banco de dados
-                    atualizarTabela(); // Atualiza a tabela de exibição após o cadastro
+
                     combo1.setSelectedIndex(0);
                 } else {
                     JOptionPane.showMessageDialog(null,
@@ -78,6 +93,12 @@ public class ClienInsProdControl {
                 }
             }
         });
+    }
+
+    private String formValorTota(int precoUnitario, String qtdVendi) {
+
+        int result = precoUnitario * Integer.parseInt(qtdVendi);
+        return qtdVendi;
 
     }
 }

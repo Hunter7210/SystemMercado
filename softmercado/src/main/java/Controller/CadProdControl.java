@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 
 import Connection.ProdutoDAO;
 import Model.Produtos;
+import View.PainelCadProd;
 
 public class CadProdControl {
 
@@ -25,22 +26,8 @@ public class CadProdControl {
         this.tabelaProd = tabelaProd;
     }
 
-    public void atualizarTableProd() {
-
-        produtos = new ProdutoDAO().listartodos();
-
-        for (Produtos produto : produtos) {
-
-            modeloTableProd.addRow(new Object[] {
-                    produto.getNome(), produto.getCodigoBarra(), produto.getLote(), produto.getQuantLot(),
-                    produto.getDataEntr(), produto.getDataVenc()
-            });
-        }
-
-    }
-
     public void cadastrar(JButton btnAciona, JTextField inptTexto1, JTextField inptTexto2, JTextField inptTexto3,
-            JTextField inptTexto4, JTextField inptTexto5, JTextField inptTexto6) {
+            JTextField inptTexto4, JTextField inptTexto5, JTextField inptTexto6, JTextField inptTexto7) {
 
         btnAciona.addActionListener(new ActionListener() {
             @Override
@@ -48,23 +35,24 @@ public class CadProdControl {
 
                 if (!inptTexto1.getText().isEmpty() && !inptTexto2.getText().isEmpty()
                         && !inptTexto3.getText().isEmpty() && !inptTexto4.getText().isEmpty()
-                        && !inptTexto5.getText().isEmpty() && !inptTexto6.getText().isEmpty()) {
-
-                    int intInpt4 = Integer.parseInt(inptTexto4.getText());
+                        && !inptTexto5.getText().isEmpty() && !inptTexto6.getText().isEmpty()
+                        && !inptTexto7.getText().isEmpty()) {
 
                     // Fazer a classe para bloquear de escrever um valor errado
                     new ProdutoDAO().cadastrar(inptTexto1.getText(), inptTexto2.getText(), inptTexto3.getText(),
-                            intInpt4, inptTexto5.getText(), inptTexto6.getText());
+                            inptTexto4.getText(), inptTexto5.getText(), inptTexto6.getText(), inptTexto7.getText());
 
                     JOptionPane.showMessageDialog(null, "Cadastro de produto realizado com sucesso");
 
-                    /* atualizarTableProd(); */
+                    PainelCadProd paineCad = new PainelCadProd();
+                    paineCad.atualizarTableProd();
                     inptTexto1.setText("");
                     inptTexto2.setText("");
                     inptTexto3.setText("");
                     inptTexto4.setText("");
                     inptTexto5.setText("");
                     inptTexto6.setText("");
+                    inptTexto7.setText("");
 
                 } else {
                     JOptionPane.showMessageDialog(null, "Por favor, preencha todos os campos.");
@@ -74,17 +62,21 @@ public class CadProdControl {
 
     }
 
-    public void atualizar(String id, String nome, String codigoBarra, String lote, String quantLot, String dataEntr,
+    public void atualizar(String id, String nome, String codigoBarra, String precoUnit, String lote, String quantLot,
+            String dataEntr,
             String dataVenc) {
-        new ProdutoDAO().atualizar(nome, codigoBarra, lote, quantLot, dataEntr, dataVenc, id);
+        new ProdutoDAO().atualizar(nome, codigoBarra, precoUnit, lote, quantLot, dataEntr, dataVenc, id);
 
-        atualizarTableProd();
+        PainelCadProd paineCad = new PainelCadProd();
+        paineCad.atualizarTableProd();
+
     }
 
     public void apagar(String id) {
         new ProdutoDAO().apagar(id);
 
-        atualizarTableProd();
+        PainelCadProd paineCad = new PainelCadProd();
+        paineCad.atualizarTableProd();
     }
     /*
      * public void verificar(String cpf) {

@@ -19,8 +19,7 @@ import Controller.ClienInsProdControl;
 import Model.Clientes;
 import Model.Produtos;
 import Model.Vendas;
-
-import logs.RegistroSistema;
+/* import logs.RegistroSistema; */
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -95,52 +94,9 @@ public class PainelFuncInseProd extends JPanel {
 
         ClienInsProdControl controlInserProd = new ClienInsProdControl();
 
-        /*
-         * controlInserProd.cadastrar(inserirVenda, produt, qtdVend.getText(),
-         * valorCompra.getText());
-         * controlInserProd.atualizarTabela();
-         */
+        controlInserProd.cadastrar(inserirVenda, produt, qtdVend);
+        atualizarTabela();
 
-        inserirVenda.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-                Object prodSelecObj = produt.getSelectedItem();
-
-                int prodSelecInt = produt.getSelectedIndex();
-                System.out.println(prodSelecInt);
-                System.out.println(prodSelecObj);
-
-                if (prodSelecInt != 0) {
-
-                    // Pegar data e hora atual do computador
-                    Date dataEHora = new Date();
-                    // Formatando
-                    String data = new SimpleDateFormat("dd/mm").format(dataEHora);
-                    String hora = new SimpleDateFormat("HH:mm:ss aaaa").format(dataEHora);
-                    String horario = data + " " + hora;
-
-                     System.out.println(horario);
-                    // Transformando o item para String
-                    String prodSelecStr = prodSelecObj.toString();
-
-                      System.out.println(prodSelecStr);
-                    new VendasDAO().cadastrar(horario, qtdVend.getText(), prodSelecStr, valorCompra.getText());
-
-
-
-                    new RegistroSistema().registroOperacao("Venda cadastrada: Data:" + horario
-                            + "Quantidade: " + qtdVend.getText() + "Codigo Produto: " + prodSelecStr + " Valor: "
-                            + valorCompra);
-
-                    // Chama o método de cadastro no banco de dados
-                    atualizarTabela(); // Atualiza a tabela de exibição após o cadastro
-                    produt.setSelectedIndex(0);
-                } else {
-                    JOptionPane.showMessageDialog(null,
-                            "Por favor, escolha um Produto!");
-                }
-            }
-        });
     }
 
     public void atualizarTabela() {

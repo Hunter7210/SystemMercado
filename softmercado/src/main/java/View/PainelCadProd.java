@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 import Connection.ProdutoDAO;
 import Controller.CadProdControl;
+import Controller.LimitaCaracteres;
 import Model.Produtos;
 
 public class PainelCadProd extends JPanel {
@@ -114,6 +115,17 @@ public class PainelCadProd extends JPanel {
 
                 painelContEle.add(btnEnvi);
 
+                // Atribuindo o limitador de caracteres a cada um dos meus Inputs com os
+                // paramêtros de qtdCaracteres e o TipoEntrada
+                nomeProdInpt.setDocument(new LimitaCaracteres(30, LimitaCaracteres.TipoEntrada.PRODUTO));
+                codProdInpt.setDocument(new LimitaCaracteres(14, LimitaCaracteres.TipoEntrada.CODPRODUTO));
+                precUitProdInpt.setDocument(new LimitaCaracteres(15, LimitaCaracteres.TipoEntrada.VALORUNIT));
+                loteProdInpt.setDocument(new LimitaCaracteres(10, LimitaCaracteres.TipoEntrada.NLOTE));
+                qtdLoteProdInpt.setDocument(new LimitaCaracteres(6, LimitaCaracteres.TipoEntrada.QTDLOTE));
+                datEntregInpt.setDocument(new LimitaCaracteres(8, LimitaCaracteres.TipoEntrada.DATAENTREG));
+                datVencInpt.setDocument(new LimitaCaracteres(8, LimitaCaracteres.TipoEntrada.DATAVENC));
+                
+
                 // tabela de carros
                 JScrollPane jSPane = new JScrollPane();
                 add(jSPane);
@@ -131,12 +143,12 @@ public class PainelCadProd extends JPanel {
                 controlCadasProd.cadastrar(btnEnvi, nomeProdInpt, codProdInpt, precUitProdInpt, loteProdInpt,
                                 qtdLoteProdInpt,
                                 datEntregInpt,
-                                datVencInpt);
-                atualizarTableProd();
+                                datVencInpt, this);
+                /* atualizarTableProd(); */
 
         }
 
-        public void atualizarTableProd() {
+        /* public void atualizarTableProd() {
 
                 produtos = new ProdutoDAO().listartodos();
 
@@ -149,5 +161,5 @@ public class PainelCadProd extends JPanel {
                         });
                 }
 
-        }
+        } */
 }

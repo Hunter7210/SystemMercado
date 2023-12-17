@@ -6,6 +6,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Controller.LimitaCaracteres;
+
 import java.awt.GridLayout;
 
 public class PainelCadGeral extends JPanel {
@@ -50,6 +52,10 @@ public class PainelCadGeral extends JPanel {
         painelContem.add(painelSenha);
         painelContem.add(btnEnvi);
 
+         // Atribuindo o limitador de caracteres a cada um dos meus Inputs com os
+        // paramêtros de qtdCaracteres e o TipoEntrada
+        inptNome.setDocument(new LimitaCaracteres(30, LimitaCaracteres.TipoEntrada.USUARIO));
+        inptSenha.setDocument(new LimitaCaracteres(16, LimitaCaracteres.TipoEntrada.SENHA));
         
 
     }

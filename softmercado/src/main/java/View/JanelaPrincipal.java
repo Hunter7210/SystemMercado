@@ -1,5 +1,6 @@
 package View;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -10,8 +11,8 @@ import Controller.ControlCards;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
-
 
 public class JanelaPrincipal extends JFrame {
 
@@ -33,9 +34,13 @@ public class JanelaPrincipal extends JFrame {
         paineDisplay.setLayout(card);
         painelPrinc.add(paineDisplay, BorderLayout.CENTER);
 
+        JPanel cardInic = new JPanel();
+        cardInic.setLayout(card);
+
         // Implementando e criando os cards
         PainelInical inicio = new PainelInical();
         paineDisplay.add(inicio, "Tela Inicial");
+
 
         PainelCadGeral cadastroGeral = new PainelCadGeral();
         paineDisplay.add(cadastroGeral, "Cadastro Geral");
@@ -64,8 +69,10 @@ public class JanelaPrincipal extends JFrame {
         PainelVendas vendasRegistro = new PainelVendas();
         paineDisplay.add(vendasRegistro, "Vendas Registro");
 
-        // Criando e Adicionando componentes ao SplitPane
-        JPanel painelcompo = new JPanel();
+        /*
+         * // Criando e Adicionando componentes ao SplitPane
+         * JPanel painelcompo = new JPanel();
+         */
 
         telaInic = new JLabel("Inicio");
         cadastGer = new JLabel("Login Geral");
@@ -78,62 +85,61 @@ public class JanelaPrincipal extends JFrame {
         compra = new JLabel("Compra");
         regisVend = new JLabel("Registro Vendas");
 
-        painelcompo.add(telaInic);
-        painelcompo.add(cadastGer);
-        painelcompo.add(cadasClie);
-        painelcompo.add(cadasProdGere);
-        painelcompo.add(club);
-        painelcompo.add(querCadas);
-        painelcompo.add(loginClien);
-        painelcompo.add(estoq);
-        painelcompo.add(compra);
-        painelcompo.add(regisVend);
-
-        GridLayout grid10x1 = new GridLayout(10, 1);
-
-        painelLateral = new JPanel();
-        painelLateral.setBackground(Color.BLUE);
-        painelLateral.add(painelcompo);
-        painelcompo.setLayout(grid10x1);
-
-        painelPrinc.add(painelLateral, BorderLayout.WEST);
-
-        // Criando um JSplitPane com os dois painéis
-        JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, painelLateral, painelPrinc);
-        // Definindo a divisão inicial
-        split.setDividerLocation(120);
-        /* this.add(splitPane); */
-
-        add(split);
+        /*
+         * painelcompo.add(telaInic);
+         * painelcompo.add(cadastGer);
+         * painelcompo.add(cadasClie);
+         * painelcompo.add(cadasProdGere);
+         * painelcompo.add(club);
+         * painelcompo.add(querCadas);
+         * painelcompo.add(loginClien);
+         * painelcompo.add(estoq);
+         * painelcompo.add(compra);
+         * painelcompo.add(regisVend);
+         * 
+         * GridLayout grid10x1 = new GridLayout(10, 1);
+         * 
+         * painelLateral = new JPanel();
+         * painelLateral.setBackground(Color.BLUE);
+         * painelLateral.add(painelcompo);
+         * painelcompo.setLayout(grid10x1);
+         * 
+         * painelPrinc.add(painelLateral, BorderLayout.WEST);
+         * 
+         * // Criando um JSplitPane com os dois painéis
+         * JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, painelLateral,
+         * painelPrinc);
+         * // Definindo a divisão inicial
+         * split.setDividerLocation(120);
+         * 
+         * add(split);
+         */
         setBounds(200, 100, 800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //Criando um contrutor do controler
+        // Criando um contrutor do controler
         ControlCards ControleCards = new ControlCards();
 
         // Metodo para mudar as paginas
-        //Mudando da pagina inicial para a pagina de Cadastro Geral
-        
+        // Mudando da pagina inicial para a pagina de Cadastro Geral
+
         ControleCards.trocarPagina(card, cadastGer, paineDisplay, "Cadastro Geral");
-        
+
         ControleCards.trocarPagina(card, cadasClie, paineDisplay, "Cadastrar Cliente");
-        
+
         ControleCards.trocarPagina(card, cadasProdGere, paineDisplay, "Cadastrar Produto");
-        
+
         ControleCards.trocarPagina(card, club, paineDisplay, "Clube");
-        
+
         ControleCards.trocarPagina(card, querCadas, paineDisplay, "Quer se Cadastrar");
-        
+
         ControleCards.trocarPagina(card, loginClien, paineDisplay, "Faça o login");
-        
+
         ControleCards.trocarPagina(card, estoq, paineDisplay, "Estoque");
-        
+
         ControleCards.trocarPagina(card, compra, paineDisplay, "Compra");
-        
+
         ControleCards.trocarPagina(card, regisVend, paineDisplay, "Vendas Registro");
-        
-
-
 
     }
 

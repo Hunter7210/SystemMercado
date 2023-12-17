@@ -94,7 +94,7 @@ public class PainelFuncInseProd extends JPanel {
 
         ClienInsProdControl controlInserProd = new ClienInsProdControl();
 
-        controlInserProd.cadastrar(inserirVenda, produt, qtdVend);
+        controlInserProd.cadastrar(inserirVenda, produt, qtdVend, this);
         atualizarTabela();
 
     }

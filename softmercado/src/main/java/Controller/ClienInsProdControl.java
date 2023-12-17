@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -21,6 +22,7 @@ import Model.Clientes;
 import Model.Produtos;
 import Model.Vendas;
 /* import logs.RegistroSistema; */
+import logs.RegistroSistema;
 
 public class ClienInsProdControl {
 
@@ -33,63 +35,59 @@ public class ClienInsProdControl {
     // Método para atualizar a tabela de exibição com dados do banco de dados
 
     // Método para cadastrar um novo carro no banco de dados
-    public void cadastrar(JButton btnAciona, JComboBox<String> combo1, JTextField quantVendi) {
+    public void cadastrar(JButton btnAciona, JComboBox<String> combo1, JTextField quantVendi, JPanel paineMostra) {
 
         btnAciona.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                Object prodSelecObj = combo1.getSelectedItem();
+                // Pergunta se o usuario quer realmente se cadastrar
+                int podCadast = JOptionPane.showConfirmDialog(paineMostra,
+                        "Tem certeza que deseja apagar o produto?",
+                        "Escolha uma opção", JOptionPane.YES_NO_OPTION);
 
-                int prodSelecInt = combo1.getSelectedIndex();
-                System.out.println(prodSelecInt);
-                System.out.println(prodSelecObj);
+                if (podCadast == JOptionPane.YES_OPTION) {
+                    Object prodSelecObj = combo1.getSelectedItem();
 
-                if (prodSelecInt != 0) {
+                    int prodSelecInt = combo1.getSelectedIndex();
+                    System.out.println(prodSelecInt);
+                    System.out.println(prodSelecObj);
 
-                    // Pegar data e hora atual do computador
-                    Date dataEHora = new Date();
-                    // Formatando
-                    String data = new SimpleDateFormat("dd/mm").format(dataEHora);
-                    String hora = new SimpleDateFormat("HH:mm:ss aaaa").format(dataEHora);
-                    String horario = data + " " + hora;
+                    if (prodSelecInt != 0) {
 
-                    System.out.println(horario);
-                    // Transformando o item para String
-                    String prodSelecStr = prodSelecObj.toString();
+                        // Pegar data e hora atual do computador
+                        Date dataEHora = new Date();
+                        // Formatando
+                        String data = new SimpleDateFormat("dd/mm").format(dataEHora);
+                        String hora = new SimpleDateFormat("HH:mm:ss aaaa").format(dataEHora);
+                        String horario = data + " " + hora;
 
-                    System.out.println(prodSelecStr);
+                        System.out.println(horario);
+                        // Transformando o item para String
+                        String prodSelecStr = prodSelecObj.toString();
 
-                    // Pegando o valor da compra por unid
-                    new ProdutoDAO().listar_apenas_um(prodSelecInt);
+                        System.out.println(prodSelecStr);
 
-                    /*
-                     * for (Produtos produto : produtos) {
-                     * String value = formValorTota(Integer.parseInt(produto.getprecoUnit()),
-                     * quantVendi.getText());
-                     * 
-                     * }
-                     */
+                        // Pegando o valor da compra por unid
+                        new ProdutoDAO().listar_apenas_um(prodSelecInt);
 
-                    String preco = produtos.get(prodSelecInt).getprecoUnit();
+                        String precoUnit = produtos.get(prodSelecInt).getprecoUnit();
 
-                    String precoTotal = formValorTota(Integer.parseInt(preco), quantVendi.getText());
-                    System.out.println(preco);
+                        String precoTotal = formValorTota(Integer.parseInt(precoUnit), quantVendi.getText());
+                        System.out.println(precoUnit);
 
-                    new VendasDAO().cadastrar(horario, quantVendi.getText(), prodSelecStr,
-                            formValorTota(Integer.parseInt(preco), quantVendi.getText()));
-                    /*
-                     * RegistroSistema registroSist = new RegistroSistema();
-                     * registroSist.registroOperacao("Venda cadastrada: Data:" + horario
-                     * + "Quantidade: " + quantVendi.getText() + "Codigo Produto: " + prodSelecStr +
-                     * " Valor: "
-                     * + valorCompra);
-                     */
-                    // Chama o método de cadastro no banco de dados
+                        new VendasDAO().cadastrar(horario, quantVendi.getText(), prodSelecStr,
+                                precoTotal);
 
-                    combo1.setSelectedIndex(0);
-                } else {
-                    JOptionPane.showMessageDialog(null,
-                            "Por favor, escolha um Produto!");
+                        JOptionPane.showMessageDialog(paineMostra, "Compra realizada com sucesso!");
+
+                        RegistroSistema.registroOperacao("Produto de nome: " + prodSelecStr + "Foi vendido com sucesso, na data: "+ horario + "Por: "+ precoTotal);
+
+                        // Chama o método de cadastro no banco de dados
+                        combo1.setSelectedIndex(0);
+                    } else {
+                        JOptionPane.showMessageDialog(paineMostra,
+                                "Por favor, escolha um Produto!");
+                    }
                 }
             }
         });
@@ -98,7 +96,8 @@ public class ClienInsProdControl {
     private String formValorTota(int precoUnitario, String qtdVendi) {
 
         int result = precoUnitario * Integer.parseInt(qtdVendi);
-        return qtdVendi;
+       String resultString = Integer.toString(result);
+       return resultString;
 
     }
 }

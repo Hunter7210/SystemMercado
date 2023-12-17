@@ -154,7 +154,7 @@ public class ProdutoDAO {
 
     }
 
-    public void atualizar(String id, String nome, String codigoBarra, String precoUnit, String lote, String quantLot, String dataEntr,
+    public void atualizar(String nome, String codigoBarra, String precoUnit, String lote, String quantLot, String dataEntr,
             String dataVenc) {
 
         PreparedStatement stmt = null;
@@ -170,7 +170,7 @@ public class ProdutoDAO {
             stmt.setString(5, quantLot);
             stmt.setString(6, dataEntr);
             stmt.setString(7, dataVenc);
-            stmt.setString(8, id);
+        
             stmt.executeUpdate();
             System.out.println("Dados atualizados com sucesso");
         } catch (Exception e) {

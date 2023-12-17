@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -24,7 +25,7 @@ public class EscolGerenControl {
     private DefaultTableModel modeloTableGerenc;
 
     public void limparCombo(JButton btnAciona, JComboBox<String> combo1, JComboBox<String> combo2,
-            JComboBox<String> combo3) {
+            JComboBox<String> combo3, JPanel painelMostr) {
 
         btnAciona.addActionListener(new ActionListener() {
             @Override
@@ -36,13 +37,17 @@ public class EscolGerenControl {
                 // Retona ao index inicial
                 if (!comb1SelecObj.equals("Selecionar o Produto") || !comb2SelecObj.equals("Selecionar o Lote")
                         || !comb3SelecObj.equals("Selecionar o Periodo de vencimento")) {
+
+
+                            //Colocar methodo para filtrar
+
                     combo1.setSelectedIndex(0);
                     combo2.setSelectedIndex(0);
                     combo3.setSelectedIndex(0);
 
-                    JOptionPane.showMessageDialog(null, "Campos limpos com sucesso!");
+                    JOptionPane.showMessageDialog(painelMostr, "Campos limpos com sucesso!");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Necessário preencher algum campo!");
+                    JOptionPane.showMessageDialog(painelMostr, "Necessário preencher algum campo!");
                 }
 
             }

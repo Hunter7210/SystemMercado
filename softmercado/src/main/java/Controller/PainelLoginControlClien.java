@@ -20,11 +20,7 @@ public class PainelLoginControlClien {
                 new ClientesDAO().buscarUsuario(textarea1.getText());
                
                 new ClientesDAO().listarTodos();
-                
-              /*   
-                if(textarea1.getText() != ){
-
-                } */
+            
 
             }
         });

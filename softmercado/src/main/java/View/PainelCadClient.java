@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 
 import Connection.ClientesDAO;
 import Controller.CadClientControl;
+import Controller.LimitaCaracteres;
 import Model.Clientes;
 
 import java.awt.Color;
@@ -55,6 +56,10 @@ public class PainelCadClient extends JPanel {
         paicont.add(paiCPF);
         paicont.add(enviar);
 
+         // Atribuindo o limitador de caracteres a cada um dos meus Inputs com os
+        // paramêtros de qtdCaracteres e o TipoEntrada
+        inptCPF.setDocument(new LimitaCaracteres(14, LimitaCaracteres.TipoEntrada.CPF));
+        
         List<Clientes> clientes = new ArrayList<>();
         DefaultTableModel modeloTableClien = new DefaultTableModel();
         JTable tabelaClien = new JTable(modeloTableClien);

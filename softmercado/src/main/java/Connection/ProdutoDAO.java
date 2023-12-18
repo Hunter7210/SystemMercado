@@ -81,7 +81,7 @@ public class ProdutoDAO {
             ConnectionFactory.closeConnection(connection, stmt, rs);
             // Fecha a conexão, o PreparedStatement e o ResultSet
         }
-        return produtos; // Retorna a lista de carros recuperados do banco de dados
+        return produtos; // Retorna a lista de produtos recuperados do banco de dados
 
     }
 
@@ -98,7 +98,7 @@ public class ProdutoDAO {
             String sql = "SELECT * FROM produt_sysmercad Where id=?";
             stmt = connection.prepareStatement(sql);
             // Prepara a consulta SQL para selecionar todos os registros da tabela
-            stmt.setString(1, "id");
+            stmt.setInt(1, id);
             rs = stmt.executeQuery();
 
             // Executa a consulta e armazena os resultados no ResultSet
@@ -114,6 +114,7 @@ public class ProdutoDAO {
                         rs.getString("dataEntr"),
                         rs.getString("dataVenc"));
                 produtos.add(produto);
+
             }
         } catch (SQLException ex) {
             System.out.println(ex); // Em caso de erro durante a consulta, imprime o erro

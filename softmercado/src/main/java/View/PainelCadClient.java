@@ -68,7 +68,7 @@ public class PainelCadClient extends JPanel {
 
         CadClientControl cadastroClient = new CadClientControl(clientes, modeloTableClien, tabelaClien);
         // Chamando a ação la da pagina cadGeralControl
-        cadastroClient.cadastrar(enviar, inptCPF);
+        cadastroClient.cadastrar(enviar, inptCPF, this);
 
     }
 }

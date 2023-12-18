@@ -33,7 +33,7 @@ public class PainelFuncInseProd extends JPanel {
 
     private JLabel tit, valorFinal;
     private JComboBox<String> produt;
-    private JTextField qtdVend, valorCompra;
+    private JTextField qtdVend /* valorCompra */;
     private JButton inserirVenda, limpar;
     private JPanel painelPrinc;
     private List<Vendas> vendas;
@@ -53,7 +53,7 @@ public class PainelFuncInseProd extends JPanel {
         produt = new JComboBox<>();
 
         qtdVend = new JTextField("");
-        valorCompra = new JTextField("");
+        /* valorCompra = new JTextField(""); */
 
         produtos = new ProdutoDAO().listartodos();
         produt.addItem("Selecionar o produto");
@@ -66,7 +66,7 @@ public class PainelFuncInseProd extends JPanel {
         // Adiciona os componentes
         painelPrinc.add(produt);
         painelPrinc.add(qtdVend);
-        painelPrinc.add(valorCompra);
+        /* painelPrinc.add(valorCompra); */
 
         // Criação de um painel para conter os botoes
         JPanel botoes = new JPanel();
@@ -91,12 +91,11 @@ public class PainelFuncInseProd extends JPanel {
 
         // Criar tabela vendas
         new VendasDAO().criarTabela();
-
-        ClienInsProdControl controlInserProd = new ClienInsProdControl();
-
-        controlInserProd.cadastrar(inserirVenda, produt, qtdVend, this);
         atualizarTabela();
 
+        ClienInsProdControl controlInserProd = new ClienInsProdControl();
+        controlInserProd.cadastrar(inserirVenda, produt, qtdVend, this);
+        atualizarTabela();
     }
 
     public void atualizarTabela() {
@@ -110,10 +109,7 @@ public class PainelFuncInseProd extends JPanel {
                     venda.getValorCompra()
             });
         }
-        /*
-         * modeloTableRegis.setRowCount(0); // Limpa todas as linhas existentes na
-         * tabela
-         */
+
     }
 
 }

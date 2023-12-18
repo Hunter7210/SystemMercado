@@ -1,5 +1,6 @@
 package Controller;
 
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -15,14 +16,13 @@ import javafx.event.ActionEvent;
 import logs.RegistroSistema;
 
 public class CadGeralControl {
-    
+
     private List<Clientes> clientes;
     private DefaultTableModel modeloTableClien;
     private JTable tabelaClien;
 
     private JButton btnEnvi;
 
-    
     public CadGeralControl(List<Clientes> clientes, DefaultTableModel modeloTableClien, JTable tabelaClien,
             JButton btnEnvi) {
         this.clientes = clientes;
@@ -45,10 +45,10 @@ public class CadGeralControl {
     }
 
     public void cadastrar(JButton btnAciona, JTextField inptTexto, JPanel painelMostra) {
-
         btnAciona.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                // TODO Auto-generated method stub
 
                 if (!inptTexto.getText().isEmpty()) {
 

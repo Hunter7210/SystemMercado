@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -35,28 +36,58 @@ public class VendasControl {
         // Obtém os carros atualizados do banco de dados
         for (Vendas venda : vendas) {
             // Adiciona os dados de cada carro como uma nova linha na tabela Swing
-            tableModel.addRow(new Object[] {venda.getDataVenda(), venda.getQuantVendi(), venda.getDataVenda(), venda.getValorCompra() });
+            tableModel.addRow(new Object[] { venda.getDataVenda(), venda.getQuantVendi(), venda.getDataVenda(),
+                    venda.getValorCompra() });
         }
     }
 
-    public void limparCombo(JButton bt1, JComboBox<String> combo1, JComboBox<String> combo2) {
+    public void limparCombo(JButton bt1, JComboBox<String> combo1, JComboBox<String> combo2, JPanel thispPanel) {
         bt1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                RegistroSistema.registroOperacao("Usuario limpou as combobox");
-                combo1.setSelectedIndex(0);
-                combo2.setSelectedIndex(0);
 
+                // Criando confirmação para limpar componentes
+
+                // Pergunta se o usuario quer realmente se cadastrar
+                int podCadast = JOptionPane.showConfirmDialog(thispPanel,
+                        "Tem certeza que deseja limpar os selecionados?",
+                        "Escolha uma opção", JOptionPane.YES_NO_OPTION);
+
+                if (podCadast == JOptionPane.YES_OPTION) {
+                    RegistroSistema.registroOperacao("Usuario limpou as combobox");
+                    combo1.setSelectedIndex(0);
+                    combo2.setSelectedIndex(0);
+
+                }
+                // Fecha automaticamente o JPanel
             }
         });
     }
 
-   
     // Método para cadastrar uma nova venda no banco de dados
-    public void cadastrar(String dataVenda, String cliente, String quantVendi, String codProd, String valorCompra) {
-        new VendasDAO().cadastrar(dataVenda, quantVendi, codProd, valorCompra);
-        // Chama o método de cadastro no banco de dados
-        atualizarTabela(); // Atualiza a tabela de exibição após o cadastro
+    public void cadastrar(JButton btnAc, String dataVenda, String cliente, String quantVendi, String codProd,
+            String valorCompra,
+            JPanel thispPanel) {
+
+        btnAc.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                int podCadast = JOptionPane.showConfirmDialog(thispPanel, "Deseja realmente realizar esta venda?",
+                        "Escolha uma opção: ", JOptionPane.YES_NO_OPTION);
+
+                if (podCadast == JOptionPane.YES_OPTION) {
+
+                    new VendasDAO().cadastrar(dataVenda, quantVendi, codProd, valorCompra);
+
+                    new RegistroSistema().registroOperacao("A compra realizada na data:" + dataVenda + "do produto com codigo igual a : "+ quantVendi + "tem o valor igual:" + valorCompra);
+                    // Chama o método de cadastro no banco de dados
+                    atualizarTabela(); // Atualiza a tabela de exibição após o cadastro
+                    
+                }
+
+            }
+        });
+
     }
 
     public void verificarBtn(JButton btn1, JComboBox<String> combo1, JComboBox<String> combo2) {
@@ -76,7 +107,7 @@ public class VendasControl {
 
                 } else {
                     JOptionPane.showMessageDialog(null,
-                    "Por favor, escolha um carro e um cliente!");
+                            "Por favor, escolha um carro e um cliente!");
                 }
             }
         });

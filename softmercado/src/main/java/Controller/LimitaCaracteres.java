@@ -61,7 +61,7 @@ public class LimitaCaracteres extends PlainDocument {
                 break;
             case
                     NLOTE:
-                recebfilt = "[^\\p{IsLatin}[0-9]]"; // 23002L23H
+                recebfilt = "[^\\p{IsLatin}0-9]"; // 23002L23H
                 break;
             case
                     CPF:
@@ -69,7 +69,7 @@ public class LimitaCaracteres extends PlainDocument {
                 break;
             case
                     QTDLOTE:
-                recebfilt = "[^[0-9]]"; // 21312
+                recebfilt = "[^0-9]"; // 21312
                 break;
             case
                     DATAENTREG:

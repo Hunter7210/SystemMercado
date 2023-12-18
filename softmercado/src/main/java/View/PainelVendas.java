@@ -42,7 +42,7 @@ public class PainelVendas extends JPanel {
 
         // Listar carros cadastrados no JCombobox
         codProd = new JComboBox<>();
-        
+
         // Listar clientes cadastrados no JCombobox
         codPeri = new JComboBox<>();
 
@@ -56,7 +56,7 @@ public class PainelVendas extends JPanel {
 
         // Preenche o comboBox
         for (Produtos produto : produtos) {
-            codProd.addItem(produto.getNome()+ " " + produto.getCodigoBarra());
+            codProd.addItem(produto.getNome() + " " + produto.getCodigoBarra());
         }
 
         for (Vendas venda : vendas) {
@@ -82,28 +82,33 @@ public class PainelVendas extends JPanel {
         add(jSPane);
 
         modeloTableRegis = new DefaultTableModel(new Object[][] {},
-                new String[] { "datavenda", "quantVendi", "codProd", "valorCompra"});
+                new String[] { "datavenda", "quantVendi", "codProd", "valorCompra" });
         tabelarRegisVend = new JTable(modeloTableRegis);
         jSPane.setViewportView(tabelarRegisVend);
 
         // Criar tabela vendas
         new VendasDAO().criarTabela();
+        atualizarTabela(modeloTableRegis, vendas);
         
         VendasControl vendasCont = new VendasControl(vendas, modeloTableRegis, tabelarRegisVend);
-        vendasCont.limparCombo(limpar, codProd, codPeri);
+        vendasCont.limparCombo(limpar, codProd, codPeri, this);
 
         atualizarTabela(modeloTableRegis, vendas);
- 
+
     }
 
-    /*     // Atualizar os dados da tabela
-        atualizarTabela();
- */
-       /*  // Instanciando um obj da classe VendasConstrol
-        VendasControl operacoesVend = new VendasControl(vendas, modeloTableRegis, tabelarRegisVend);
-        // Buscando o item selecionado no comboBox
- */
- // Método para atualizar a tabela de exibição com dados do banco de dados
+    /*
+     * // Atualizar os dados da tabela
+     * atualizarTabela();
+     */
+    /*
+     * // Instanciando um obj da classe VendasConstrol
+     * VendasControl operacoesVend = new VendasControl(vendas, modeloTableRegis,
+     * tabelarRegisVend);
+     * // Buscando o item selecionado no comboBox
+     */
+
+    // Método para atualizar a tabela de exibição com dados do banco de dados
     public void atualizarTabela(DefaultTableModel modeloTabela, List<Vendas> vendas) {
         modeloTabela.setRowCount(0); // Limpa todas as linhas existentes na tabela
         vendas = new VendasDAO().listarVendas();
@@ -117,6 +122,5 @@ public class PainelVendas extends JPanel {
                     venda.getValorCompra(), venda.getQuantVendi() });
         }
     }
-
 
 }

@@ -122,8 +122,8 @@ public class PainelCadProd extends JPanel {
                 precUitProdInpt.setDocument(new LimitaCaracteres(15, LimitaCaracteres.TipoEntrada.VALORUNIT));
                 loteProdInpt.setDocument(new LimitaCaracteres(10, LimitaCaracteres.TipoEntrada.NLOTE));
                 qtdLoteProdInpt.setDocument(new LimitaCaracteres(6, LimitaCaracteres.TipoEntrada.QTDLOTE));
-                datEntregInpt.setDocument(new LimitaCaracteres(8, LimitaCaracteres.TipoEntrada.DATAENTREG));
-                datVencInpt.setDocument(new LimitaCaracteres(8, LimitaCaracteres.TipoEntrada.DATAVENC));
+                datEntregInpt.setDocument(new LimitaCaracteres(10, LimitaCaracteres.TipoEntrada.DATAENTREG));
+                datVencInpt.setDocument(new LimitaCaracteres(10, LimitaCaracteres.TipoEntrada.DATAVENC));
                 
 
                 // tabela de carros

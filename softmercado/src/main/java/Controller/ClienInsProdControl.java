@@ -21,18 +21,31 @@ import Connection.VendasDAO;
 import Model.Clientes;
 import Model.Produtos;
 import Model.Vendas;
+import javafx.scene.control.ComboBox;
 /* import logs.RegistroSistema; */
 import logs.RegistroSistema;
 
 public class ClienInsProdControl {
 
-    private List<Vendas> vendas;
     private List<Produtos> produtos;
+    private List<Vendas> vendas;
 
     private JTable tabelarRegisVend;
     private DefaultTableModel modeloTableRegis;
 
     // Método para atualizar a tabela de exibição com dados do banco de dados
+
+    // Metodo para atualizar a tabela com os dados
+    private void atualizarTabela() {
+        modeloTableRegis.setRowCount(0); // Limpa todas as linhas da tabela
+        vendas = new VendasDAO().listarVendas();
+        // Pega as vendas realizadas
+        for (Vendas venda : vendas) {
+            // Adiciona os dados a cadas venda no java swing
+            modeloTableRegis.addRow(new Object[] { venda.getDataVenda(), venda.getQuantVendi(), venda.getCodProd(),
+                    venda.getValorCompra() });
+        }
+    }
 
     // Método para cadastrar um novo carro no banco de dados
     public void cadastrar(JButton btnAciona, JComboBox<String> combo1, JTextField quantVendi, JPanel paineMostra) {
@@ -42,7 +55,7 @@ public class ClienInsProdControl {
 
                 // Pergunta se o usuario quer realmente se cadastrar
                 int podCadast = JOptionPane.showConfirmDialog(paineMostra,
-                        "Tem certeza que deseja apagar o produto?",
+                        "Tem certeza que deseja comprar o produto?",
                         "Escolha uma opção", JOptionPane.YES_NO_OPTION);
 
                 if (podCadast == JOptionPane.YES_OPTION) {
@@ -65,25 +78,35 @@ public class ClienInsProdControl {
                         // Transformando o item para String
                         String prodSelecStr = prodSelecObj.toString();
 
-                        System.out.println(prodSelecStr);
+                        System.out.println(prodSelecStr + "/////");
+                        produtos = new ProdutoDAO().listar_apenas_um(prodSelecInt);
 
-                        // Pegando o valor da compra por unid
-                        new ProdutoDAO().listar_apenas_um(prodSelecInt);
+                        System.out.println(produtos);
+                        for (Produtos produto : produtos) {
+                            System.out.println(produto.getprecoUnit());
 
-                        String precoUnit = produtos.get(prodSelecInt).getprecoUnit();
+                            try {
 
-                        String precoTotal = formValorTota(Integer.parseInt(precoUnit), quantVendi.getText());
-                        System.out.println(precoUnit);
+                                Double precoTot = Double.parseDouble(produto.getprecoUnit().replace(".", "").trim())
+                                        * Integer.parseInt(quantVendi.getText());
+                                Double precoTotCorrig = precoTot / 100;
 
-                        new VendasDAO().cadastrar(horario, quantVendi.getText(), prodSelecStr,
-                                precoTotal);
+                                new VendasDAO().cadastrar(horario, quantVendi.getText().toString(), prodSelecStr,
+                                        precoTotCorrig.toString());
 
-                        JOptionPane.showMessageDialog(paineMostra, "Compra realizada com sucesso!");
+                                JOptionPane.showMessageDialog(paineMostra, "Compra realizada com sucesso!");
 
-                        RegistroSistema.registroOperacao("Produto de nome: " + prodSelecStr + "Foi vendido com sucesso, na data: "+ horario + "Por: "+ precoTotal);
+                                RegistroSistema.registroOperacao("Produto de nome: " + prodSelecStr
+                                        + " Foi vendido com sucesso, na data: " + horario + " Por: " + precoTotCorrig);
 
-                        // Chama o método de cadastro no banco de dados
-                        combo1.setSelectedIndex(0);
+                                // Chama o método de cadastro no banco de dados
+                                combo1.setSelectedIndex(0);
+                                atualizarTabela();
+                            } catch (NullPointerException err) {
+                                System.out.println(err);
+                            }
+                        }
+
                     } else {
                         JOptionPane.showMessageDialog(paineMostra,
                                 "Por favor, escolha um Produto!");
@@ -93,11 +116,9 @@ public class ClienInsProdControl {
         });
     }
 
-    private String formValorTota(int precoUnitario, String qtdVendi) {
-
-        int result = precoUnitario * Integer.parseInt(qtdVendi);
-       String resultString = Integer.toString(result);
-       return resultString;
-
+    public void limparCombo(JComboBox<String> combo1, JComboBox<String> combo2) {
+        combo1.setSelectedItem(0);
+        combo2.setSelectedIndex(0);
     }
+
 }

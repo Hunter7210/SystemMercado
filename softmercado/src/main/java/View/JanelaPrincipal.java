@@ -41,7 +41,6 @@ public class JanelaPrincipal extends JFrame {
         PainelInical inicio = new PainelInical();
         paineDisplay.add(inicio, "Tela Inicial");
 
-
         PainelCadGeral cadastroGeral = new PainelCadGeral();
         paineDisplay.add(cadastroGeral, "Cadastro Geral");
 
@@ -69,10 +68,8 @@ public class JanelaPrincipal extends JFrame {
         PainelVendas vendasRegistro = new PainelVendas();
         paineDisplay.add(vendasRegistro, "Vendas Registro");
 
-        /*
-         * // Criando e Adicionando componentes ao SplitPane
-         * JPanel painelcompo = new JPanel();
-         */
+        // Criando e Adicionando componentes ao SplitPane
+        JPanel painelcompo = new JPanel();
 
         telaInic = new JLabel("Inicio");
         cadastGer = new JLabel("Login Geral");
@@ -85,35 +82,34 @@ public class JanelaPrincipal extends JFrame {
         compra = new JLabel("Compra");
         regisVend = new JLabel("Registro Vendas");
 
-        /*
-         * painelcompo.add(telaInic);
-         * painelcompo.add(cadastGer);
-         * painelcompo.add(cadasClie);
-         * painelcompo.add(cadasProdGere);
-         * painelcompo.add(club);
-         * painelcompo.add(querCadas);
-         * painelcompo.add(loginClien);
-         * painelcompo.add(estoq);
-         * painelcompo.add(compra);
-         * painelcompo.add(regisVend);
-         * 
-         * GridLayout grid10x1 = new GridLayout(10, 1);
-         * 
-         * painelLateral = new JPanel();
-         * painelLateral.setBackground(Color.BLUE);
-         * painelLateral.add(painelcompo);
-         * painelcompo.setLayout(grid10x1);
-         * 
-         * painelPrinc.add(painelLateral, BorderLayout.WEST);
-         * 
-         * // Criando um JSplitPane com os dois painéis
-         * JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, painelLateral,
-         * painelPrinc);
-         * // Definindo a divisão inicial
-         * split.setDividerLocation(120);
-         * 
-         * add(split);
-         */
+        painelcompo.add(telaInic);
+        painelcompo.add(cadastGer);
+        painelcompo.add(cadasClie);
+        painelcompo.add(cadasProdGere);
+        painelcompo.add(club);
+        painelcompo.add(querCadas);
+        painelcompo.add(loginClien);
+        painelcompo.add(estoq);
+        painelcompo.add(compra);
+        painelcompo.add(regisVend);
+
+        GridLayout grid10x1 = new GridLayout(10, 1);
+
+        painelLateral = new JPanel();
+        painelLateral.setBackground(Color.BLUE);
+        painelLateral.add(painelcompo);
+        painelcompo.setLayout(grid10x1);
+
+        painelPrinc.add(painelLateral, BorderLayout.WEST);
+
+        // Criando um JSplitPane com os dois painéis
+        JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, painelLateral,
+                painelPrinc);
+        // Definindo a divisão inicial
+        split.setDividerLocation(120);
+
+        add(split);
+
         setBounds(200, 100, 800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

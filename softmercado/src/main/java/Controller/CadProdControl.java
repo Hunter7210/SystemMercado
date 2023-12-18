@@ -43,7 +43,7 @@ public class CadProdControl {
 
                     // Pergunta se o usuario quer realmente se cadastrar
                     int podCadast = JOptionPane.showConfirmDialog(paineMostra,
-                            "Tem certeza que deseja apagar o produto?",
+                            "Tem certeza que deseja cadastrar o produto?",
                             "Escolha uma opção", JOptionPane.YES_NO_OPTION);
                     if (podCadast == JOptionPane.YES_OPTION) {
 

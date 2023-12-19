@@ -31,11 +31,11 @@ import java.text.SimpleDateFormat;
  */
 public class PainelFuncInseProd extends JPanel {
 
-    private JLabel tit, valorFinal;
+    private JLabel tit, qtdPrd, valorFinal, valorTot;
     private JComboBox<String> produt;
     private JTextField qtdVend /* valorCompra */;
     private JButton inserirVenda, limpar;
-    private JPanel painelPrinc;
+    private JPanel painelPrinc, painelQtd, painelValor;
     private List<Vendas> vendas;
     private List<Produtos> produtos;
     private JTable tabelarVend;
@@ -43,6 +43,7 @@ public class PainelFuncInseProd extends JPanel {
 
     public PainelFuncInseProd() {
 
+        GridLayout grid1x2 = new GridLayout(1,2);
         GridLayout grid2x1 = new GridLayout(2, 1);
         painelPrinc = new JPanel();
         this.add(painelPrinc);
@@ -52,8 +53,11 @@ public class PainelFuncInseProd extends JPanel {
 
         produt = new JComboBox<>();
 
+        tit = new JLabel("Realize sua compra");
+        valorTot = new JLabel("TOTAL (R$): ");
+        valorFinal = new JLabel("");
+        qtdPrd = new JLabel("Quantidade de produtos:");
         qtdVend = new JTextField("");
-        /* valorCompra = new JTextField(""); */
 
         produtos = new ProdutoDAO().listartodos();
         produt.addItem("Selecionar o produto");
@@ -63,11 +67,18 @@ public class PainelFuncInseProd extends JPanel {
             produt.addItem(produto.getNome() + " " + produto.getCodigoBarra());
         }
 
+        painelQtd = new JPanel(grid2x1);
+        painelQtd.add(qtdPrd);
+        painelQtd.add(qtdVend);
+
+        painelValor = new JPanel(grid1x2);
+        painelValor.add(valorTot);
+        painelValor.add(valorFinal);
         // Adiciona os componentes
         painelPrinc.add(produt);
-        painelPrinc.add(qtdVend);
-        /* painelPrinc.add(valorCompra); */
-
+        painelPrinc.add(painelQtd);
+        painelPrinc.add(painelValor); 
+       
         // Criação de um painel para conter os botoes
         JPanel botoes = new JPanel();
         inserirVenda = new JButton("Realizar Venda");
@@ -82,7 +93,7 @@ public class PainelFuncInseProd extends JPanel {
         JScrollPane jSPane = new JScrollPane();
         add(jSPane);
 
-        valorFinal = new JLabel();
+        
 
         modeloTableRegis = new DefaultTableModel(new Object[][] {},
                 new String[] { "datavenda", "quantVendi", "codProd", "valorCompra" });
@@ -94,7 +105,12 @@ public class PainelFuncInseProd extends JPanel {
         atualizarTabela();
 
         ClienInsProdControl controlInserProd = new ClienInsProdControl();
+        controlInserProd.mostrarValorTot(valorFinal, qtdVend, produt, this);
+        
         controlInserProd.cadastrar(inserirVenda, produt, qtdVend, this);
+        controlInserProd.limparCombo(produt);
+        
+
         atualizarTabela();
     }
 

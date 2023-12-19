@@ -2,6 +2,8 @@ package Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,10 +35,12 @@ public class ClienInsProdControl {
     private JTable tabelarRegisVend;
     private DefaultTableModel modeloTableRegis;
 
+    private DefaultTableModel modeloTableProd;
+    private JTable tabelaProd;
     // Método para atualizar a tabela de exibição com dados do banco de dados
 
     // Metodo para atualizar a tabela com os dados
-    private void atualizarTabela() {
+    public void atualizarTabela() {
         modeloTableRegis.setRowCount(0); // Limpa todas as linhas da tabela
         vendas = new VendasDAO().listarVendas();
         // Pega as vendas realizadas
@@ -44,6 +48,21 @@ public class ClienInsProdControl {
             // Adiciona os dados a cadas venda no java swing
             modeloTableRegis.addRow(new Object[] { venda.getDataVenda(), venda.getQuantVendi(), venda.getCodProd(),
                     venda.getValorCompra() });
+        }
+    }
+
+    // Metodo para atualizar a tabela com os dados
+    public void atualizarTableProd() {
+        /* modeloTableProd.setRowCount(0); */// Limpa todas as linhas da tabela
+        produtos = new ProdutoDAO().listartodos();
+        // Pega as produtos realizadas
+        for (Produtos produto : produtos) {
+            // Adiciona os dados a cadas venda no java swing
+            modeloTableProd.addRow(new Object[] {
+                    produto.getNome(), produto.getCodigoBarra(), produto.getprecoUnit(),
+                    produto.getLote(), produto.getQuantLot(),
+                    produto.getDataEntr(), produto.getDataVenc()
+            });
         }
     }
 
@@ -102,6 +121,7 @@ public class ClienInsProdControl {
                                 // Chama o método de cadastro no banco de dados
                                 combo1.setSelectedIndex(0);
                                 atualizarTabela();
+                                atualizarTableProd();
                             } catch (NullPointerException err) {
                                 System.out.println(err);
                             }
@@ -116,9 +136,60 @@ public class ClienInsProdControl {
         });
     }
 
-    public void limparCombo(JComboBox<String> combo1, JComboBox<String> combo2) {
+    public void limparCombo(JComboBox<String> combo1) {
         combo1.setSelectedItem(0);
-        combo2.setSelectedIndex(0);
+
     }
 
+    public void mostrarValorTot(JLabel valorFina, JTextField quantVendi, JComboBox<String> combo1, JPanel painelthis) {
+
+        painelthis.addMouseListener(new MouseListener() {
+
+            @Override
+            public void mouseClicked(MouseEvent arg0) {
+                Object prodSelecObj = combo1.getSelectedItem();
+
+                int prodSelecInt = combo1.getSelectedIndex();
+                System.out.println(prodSelecInt);
+                System.out.println(prodSelecObj);
+
+                if (prodSelecInt != 0) {
+                    produtos = new ProdutoDAO().listar_apenas_um(prodSelecInt);
+                    for (Produtos produto : produtos) {
+
+                        Double precoTot = Double.parseDouble(produto.getprecoUnit().replace(".", "").trim())
+                                * Integer.parseInt(quantVendi.getText());
+                        Double precoTotCorrig = precoTot / 100;
+                        valorFina.setText(precoTotCorrig.toString());
+
+                    }
+                }
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent arg0) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+        });
+
+    }
 }

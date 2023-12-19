@@ -12,7 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import Connection.ProdutoDAO;
 import Connection.VendasDAO;
+import Model.Produtos;
 import Model.Vendas;
 import logs.RegistroSistema;
 
@@ -23,6 +25,10 @@ public class VendasControl {
     private DefaultTableModel tableModel;
     private JTable table;
 
+    private List<Produtos> produtos;
+    private DefaultTableModel modeloTableProd;
+    private JTable tabelaProd;
+
     // Construtor
     public VendasControl(List<Vendas> vendas, DefaultTableModel tableModel, JTable table) {
         this.vendas = vendas;
@@ -30,14 +36,29 @@ public class VendasControl {
         this.table = table;
     }
 
-    private void atualizarTabela() {
+    public void atualizarTabela() {
         tableModel.setRowCount(0); // Limpa todas as linhas existentes na tabela
         vendas = new VendasDAO().listarVendas();
         // Obtém os carros atualizados do banco de dados
         for (Vendas venda : vendas) {
             // Adiciona os dados de cada carro como uma nova linha na tabela Swing
-            tableModel.addRow(new Object[] { venda.getDataVenda(), venda.getQuantVendi(), venda.getDataVenda(),
+            tableModel.addRow(new Object[] { venda.getDataVenda(), venda.getQuantVendi(), venda.getCodProd(),
                     venda.getValorCompra() });
+        }
+    }
+
+    // Metodo para atualizar a tabela com os dados
+    public void atualizarTableProd() {
+        /* modeloTableProd.setRowCount(0); */ // Limpa todas as linhas da tabela
+        produtos = new ProdutoDAO().listartodos();
+        // Pega as produtos realizadas
+        for (Produtos produto : produtos) {
+            // Adiciona os dados a cadas venda no java swing
+            modeloTableProd.addRow(new Object[] {
+                    produto.getNome(), produto.getCodigoBarra(), produto.getprecoUnit(),
+                    produto.getLote(), produto.getQuantLot(),
+                    produto.getDataEntr(), produto.getDataVenc()
+            });
         }
     }
 
@@ -57,6 +78,7 @@ public class VendasControl {
                     RegistroSistema.registroOperacao("Usuario limpou as combobox");
                     combo1.setSelectedIndex(0);
                     combo2.setSelectedIndex(0);
+                    atualizarTableProd();
 
                 }
                 // Fecha automaticamente o JPanel
@@ -79,10 +101,12 @@ public class VendasControl {
 
                     new VendasDAO().cadastrar(dataVenda, quantVendi, codProd, valorCompra);
 
-                    new RegistroSistema().registroOperacao("A compra realizada na data:" + dataVenda + "do produto com codigo igual a : "+ quantVendi + "tem o valor igual:" + valorCompra);
+                    new RegistroSistema().registroOperacao("A compra realizada na data:" + dataVenda
+                            + "do produto com codigo igual a : " + quantVendi + "tem o valor igual:" + valorCompra);
                     // Chama o método de cadastro no banco de dados
                     atualizarTabela(); // Atualiza a tabela de exibição após o cadastro
-                    
+                    atualizarTableProd();
+
                 }
 
             }
@@ -104,10 +128,37 @@ public class VendasControl {
 
                     combo1.setSelectedIndex(0);
                     combo2.setSelectedIndex(0);
+                    atualizarTableProd();
 
                 } else {
                     JOptionPane.showMessageDialog(null,
                             "Por favor, escolha um carro e um cliente!");
+                }
+            }
+        });
+    }
+
+    public void filtrar(JButton btn1, JComboBox<String> combo1, JComboBox<String> combo2) {
+
+        btn1.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object prodSelecObj = combo1.getSelectedItem();
+
+                int prodSelecInt = combo1.getSelectedIndex();
+                System.out.println(prodSelecInt);
+                System.out.println(prodSelecObj);
+
+                if (prodSelecInt != 0) {/*
+                                         * 
+                                         * System.out.println(vendas = new VendasDAO().listarVendas());
+                                         * 
+                                         */
+
+                    System.out.println(new VendasDAO().filtrar(prodSelecObj.toString()));
+
+                    atualizarTabela();
                 }
             }
         });

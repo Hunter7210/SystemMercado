@@ -74,8 +74,45 @@ public class VendasDAO {
         return vendas; // Retorna a lista para o banco de dados
     }
 
+    // Metodo para listar os valores
+    public List<Vendas> listarVendas_valores(int id) {
+        PreparedStatement stmt = null;
+        // Declaração do objeto PreparedStatement para executar a consulta
+        ResultSet rs = null;
+        // Declaração do objeto ResultSet para armazenar os resultados da consulta
+
+        vendas = new ArrayList<>();
+        // Cria uma lista para armazenar os carros recuperados do banco de dados
+        try {
+            String query = "SELECT * FROM vendas_sysmercad WHERE id=?";
+            // Prepara a consulta SQL para selecionar todos os registros da tabela
+
+            stmt = connection.prepareStatement(query);
+            stmt.setInt(1, id);
+            // Resultado
+            rs = stmt.executeQuery();
+            // Executa a consulta e armazena os resultados no ResultSet
+            while (rs.next()) {
+                // Para cada registro no ResultSet, cria um objeto Carros com os valores do
+                // registro
+                Vendas venda = new Vendas(
+                        rs.getString("datavenda"),
+                        rs.getString("quantVendi"),
+                        rs.getString("codProd"),
+                        rs.getString("valorCompra"));
+                vendas.add(venda);// Add o objeto com todos os dados nele
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        } finally {
+            ConnectionFactory.closeConnection(connection, stmt, rs);
+            // Fecha os três
+        }
+        return vendas; // Retorna a lista para o banco de dados
+    }
+
     // Cadastrar venda
-    public void cadastrar(String dataVenda , String quantVendi, String codProd, String valorCompra) {
+    public void cadastrar(String dataVenda, String quantVendi, String codProd, String valorCompra) {
         PreparedStatement stmt = null;
         // Define a instrução SQL parametrizada para cadastrar na tabela
 
@@ -97,5 +134,38 @@ public class VendasDAO {
             ConnectionFactory.closeConnection(connection, stmt);
             // Fecha a conexão e o PreparedStatement
         }
+    }
+
+    public List<Vendas> filtrar(String codProd) {
+        PreparedStatement stmt = null;
+        // Define a instrução SQL parametrizada para cadastrar na tabela
+        ResultSet rs = null;
+
+        vendas = new ArrayList<>();
+        String sql = "SELECT * FROM vendas_sysmercad WHERE codprod=?;";
+        try {
+
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, codProd);
+            // Cria uma lista para armazenar os carros recuperados do banco de dados
+            rs = stmt.executeQuery();
+            // Executa a consulta e armazena os resultados no ResultSet
+            while (rs.next()) {
+                // Para cada registro no ResultSet, cria um objeto Carros com os valores do
+                // registro
+                Vendas venda = new Vendas(
+                        rs.getString("datavenda"),
+                        rs.getString("quantVendi"),
+                        rs.getString("codProd"),
+                        rs.getString("valorCompra"));
+                vendas.add(venda);// Add o objeto com todos os dados nele
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        } finally {
+            ConnectionFactory.closeConnection(connection, stmt, rs);
+            // Fecha os três
+        }
+        return vendas; // Retorna a lista para o banco de dados
     }
 }

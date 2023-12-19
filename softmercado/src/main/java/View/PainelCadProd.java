@@ -144,11 +144,11 @@ public class PainelCadProd extends JPanel {
                                 qtdLoteProdInpt,
                                 datEntregInpt,
                                 datVencInpt, this);
-                /* atualizarTableProd(); */
+                atualizarTableProd();
 
         }
 
-        /* public void atualizarTableProd() {
+        public void atualizarTableProd() {
 
                 produtos = new ProdutoDAO().listartodos();
 
@@ -161,5 +161,5 @@ public class PainelCadProd extends JPanel {
                         });
                 }
 
-        } */
+        }
 }

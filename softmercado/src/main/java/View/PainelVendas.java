@@ -92,22 +92,13 @@ public class PainelVendas extends JPanel {
         
         VendasControl vendasCont = new VendasControl(vendas, modeloTableRegis, tabelarRegisVend);
         vendasCont.limparCombo(limpar, codProd, codPeri, this);
+        vendasCont.filtrar(btnFiltrar, codProd, codPeri);
 
         atualizarTabela(modeloTableRegis, vendas);
 
     }
 
-    /*
-     * // Atualizar os dados da tabela
-     * atualizarTabela();
-     */
-    /*
-     * // Instanciando um obj da classe VendasConstrol
-     * VendasControl operacoesVend = new VendasControl(vendas, modeloTableRegis,
-     * tabelarRegisVend);
-     * // Buscando o item selecionado no comboBox
-     */
-
+  
     // Método para atualizar a tabela de exibição com dados do banco de dados
     public void atualizarTabela(DefaultTableModel modeloTabela, List<Vendas> vendas) {
         modeloTabela.setRowCount(0); // Limpa todas as linhas existentes na tabela

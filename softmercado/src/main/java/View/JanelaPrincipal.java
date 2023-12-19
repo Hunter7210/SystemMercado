@@ -110,7 +110,7 @@ public class JanelaPrincipal extends JFrame {
 
         add(split);
 
-        setBounds(200, 100, 800, 600);
+        setBounds(200, 100, 900, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Criando um contrutor do controler

@@ -12,7 +12,9 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import Connection.ProdutoDAO;
+import Connection.VendasDAO;
 import Model.Produtos;
+import Model.Vendas;
 import View.PainelCadProd;
 import logs.RegistroSistema;
 
@@ -26,6 +28,21 @@ public class CadProdControl {
         this.produtos = produtos;
         this.modeloTableProd = modeloTableProd;
         this.tabelaProd = tabelaProd;
+    }
+
+    // Metodo para atualizar a tabela com os dados
+    private void atualizarTableProd() {
+        modeloTableProd.setRowCount(0); // Limpa todas as linhas da tabela
+        produtos = new ProdutoDAO().listartodos();
+        // Pega as produtos realizadas
+        for (Produtos produto : produtos) {
+            // Adiciona os dados a cadas venda no java swing
+           modeloTableProd.addRow(new Object[] {
+                    produto.getNome(), produto.getCodigoBarra(), produto.getprecoUnit(),
+                    produto.getLote(), produto.getQuantLot(),
+                    produto.getDataEntr(), produto.getDataVenc()
+            });
+        }
     }
 
     public void cadastrar(JButton btnAciona, JTextField inptTexto1, JTextField inptTexto2, JTextField inptTexto3,
@@ -131,21 +148,6 @@ public class CadProdControl {
                 // Fecha o JOptionPane automaticamente
             }
         });
-    }
-
-    public void atualizarTableProd() {
-
-        produtos = new ProdutoDAO().listartodos();
-
-        for (Produtos produto : produtos) {
-
-            modeloTableProd.addRow(new Object[] {
-                    produto.getNome(), produto.getCodigoBarra(), produto.getprecoUnit(),
-                    produto.getLote(), produto.getQuantLot(),
-                    produto.getDataEntr(), produto.getDataVenc()
-            });
-        }
-
     }
 
 }
